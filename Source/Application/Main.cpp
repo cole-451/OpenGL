@@ -27,12 +27,29 @@ int main(int argc, char* argv[]) {
         if (neu::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 
         // draw
-        neu::vec3 color{ 0, 0, 0 };
+        neu::GetEngine().GetRenderer().Clear();
+
+        glBegin(GL_QUADS);
+
+        glColor3f(1,0,0);
+        glVertex3f(-1,1,0);
+        glColor3f(1,1,0);
+        glVertex3f(1,0,0);
+        glColor3f(1,1,0);
+        glVertex3f(1,1,0);
+        glColor4f(1, 0, 1, 0);
+        glVertex4f(1, -1, 0, 10);
+
+        glEnd();
+
+        neu::GetEngine().GetRenderer().Present();
+
+       /* neu::vec3 color{ 0, 0, 0 };
         neu::GetEngine().GetRenderer().SetColor(color.r, color.g, color.b);
         neu::GetEngine().GetRenderer().Clear();
 
 
-        neu::GetEngine().GetRenderer().Present();
+        neu::GetEngine().GetRenderer().Present();*/
     }
 
     neu::GetEngine().Shutdown();
