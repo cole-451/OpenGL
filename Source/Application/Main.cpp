@@ -76,7 +76,7 @@ int main(int argc, char* argv[]) {
     {
         std::string infoLog(512, '\0');  // pre-allocate space
         GLsizei length;
-        glGetShaderInfoLog(vs, (GLsizei)infoLog.size(), &length, &infoLog[0]);
+        glGetShaderInfoLog(fs, (GLsizei)infoLog.size(), &length, &infoLog[0]);
         infoLog.resize(length);
 
         LOG_WARNING("Shader compilation failed: {}", infoLog);
@@ -102,6 +102,11 @@ int main(int argc, char* argv[]) {
     //now we can use it!
     glUseProgram(shaderProgram);
 
+    // now we need to make a connection to the uniform for the time variable we had
+   GLint uniform = glGetUniformLocation(shaderProgram, "u_time");
+
+   //make SURE that the uniform does not fail, or this will crash.
+   ASSERT(uniform != -1);
 
 
 
@@ -122,6 +127,8 @@ int main(int argc, char* argv[]) {
         neu::GetEngine().Update();
 
         if (neu::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
+
+        glUniform1f(uniform, neu::GetEngine().GetTime().GetTime());
 
 
          
