@@ -8,26 +8,47 @@ int main(int argc, char* argv[]) {
     neu::GetEngine().Initialize();
 
     // initialize scene
-    std::vector<neu::vec3> points;
-    std::vector<neu::vec3> colors;
+    std::vector<neu::vec3> points{ { -0.5f, -0.5f, 0 }, { 0, 0.5f, 0 }, { 0.5f, -0.5f, 0 }, { 0.5f, 0.5f, 0 } };
+    std::vector<neu::vec3> colors{ { 1, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 }, {1,0,1} };
 
-    neu::vec3 color1{ 1,0,1 };
-    neu::vec3 color2{ 1,0,1 };
-    neu::vec3 color3{ 1,0,1 };
-    neu::vec3 color4{ 1,0,1 };
-    colors.push_back(color1);
-    colors.push_back(color2);
-    colors.push_back(color3);
-    colors.push_back(color4);
 
-    neu::vec3 point1{ -1,1,0 };
-    points.push_back(point1);
-    neu::vec3 point2{ 1,0,0 };
-    points.push_back(point2);
-    neu::vec3 point3{ 1,1,0 };
-    neu::vec3 point4{ 1, -1, 0 };
-    points.push_back(point3);
-    points.push_back(point4);
+    //vertex buffer stuff.
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(neu::vec3) * points.size(), points.data(), GL_STATIC_DRAW);
+
+    //vertex array
+    GLuint vao;
+    glGenVertexArrays(1, &vao);
+
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+    //vertex shaders
+    std::string vs_source;
+    neu::file::ReadTextFile("Shaders/basic.vert", vs_source);
+    const char* vs_cstr = vs_source.c_str();
+
+    GLuint vs;
+    vs = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vs, 1, &vs_cstr, NULL);
+    glCompileShader(vs);
+
+    //fragment shaders
+    std::string fs_source;
+    neu::file::ReadTextFile("Shaders/basic.frag", fs_source);
+    const char* fs_cstr = fs_source.c_str();
+
+    GLuint fs;
+    fs = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fs, 1, &fs_cstr, NULL);
+    glCompileShader(fs);
+
+
+
 
 
 
@@ -47,11 +68,20 @@ int main(int argc, char* argv[]) {
 
         if (neu::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 
+
+         
+        
         //USE THIS FOR TRANSFORMATION.
-        neu::vec2 position = neu::GetEngine().GetInput().GetMousePosition();
+        neu::vec2 mousepos = neu::GetEngine().GetInput().GetMousePosition();
+        neu::vec2 position;
+        position.x = neu::math::Remap(0.0f, (float)neu::GetEngine().GetRenderer().GetWidth(), -1.0f, 1.0f, mousepos.x);
+        position.y = -neu::math::Remap(0.0f, (float)neu::GetEngine().GetRenderer().GetHeight(), -1.0f, 1.0f, mousepos.y);
+        
 
         float angle = neu::GetEngine().GetTime().GetTime() * 90.0f;
-
+        neu::vec2 scale;
+        scale.x = neu::math::sin(neu::GetEngine().GetTime().GetTime());
+        scale.y = neu::math::sin(neu::GetEngine().GetTime().GetTime());
 
 
         std::cout << neu::GetEngine().GetInput().GetMousePosition().x<<std::endl;
@@ -63,44 +93,22 @@ int main(int argc, char* argv[]) {
         glLoadIdentity();
         glPushMatrix();
         glTranslatef(position.x, position.y, 0);
-       // glRotatef(angle, 1, 0, 0); make an angle variable
-        //glScalef(scale, scale, 0);
+        glRotatef(angle, 0, angle, 0);
+        glScalef(scale.x, scale.y, 0);
         glBegin(GL_QUADS);
 
-       /* for (neu::vec3& color: colors) {
-            glColor3f(color.r, color.g, color.b);
-        }
-        for (neu::vec3& point : points) {
-            glColor3f(point.x, point.y, point.z);
-        }*/
 
         for (int i = 0; i < points.size(); i++) {
             glColor3f(colors[i].r, colors[i].g, colors[i].b);
             glVertex3f(points[i].x, points[i].y, points[i].z);
         }
 
-
-        /*glColor3f(1,0,0);
-        glVertex3f(-1,1,0);
-        glColor3f(1,1,0);
-        glVertex3f(1,0,0);
-        glColor3f(1,1,0);
-        glVertex3f(1,1,0);
-        glColor3f(1, 0, 1);
-        glVertex3f(1, -1, 0);*/
-
         glEnd();
 
         glPopMatrix();
-
+        
         neu::GetEngine().GetRenderer().Present();
 
-       /* neu::vec3 color{ 0, 0, 0 };
-        neu::GetEngine().GetRenderer().SetColor(color.r, color.g, color.b);
-        neu::GetEngine().GetRenderer().Clear();
-
-
-        neu::GetEngine().GetRenderer().Present();*/
     }
 
     neu::GetEngine().Shutdown();
