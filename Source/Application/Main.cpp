@@ -7,25 +7,37 @@ int main(int argc, char* argv[]) {
     LOG_INFO("initialize engine...");
     neu::GetEngine().Initialize();
 
-    // initialize scene
+    // initialize OpenGL stuff
     std::vector<neu::vec3> points{ { -0.5f, -0.5f, 0 }, { 0, 0.5f, 0 }, { 0.5f, -0.5f, 0 }, { 0.5f, 0.5f, 0 } };
     std::vector<neu::vec3> colors{ { 1, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 }, {1,0,1} };
 
 
-    //vertex buffer stuff.
-    GLuint vbo;
-    glGenBuffers(1, &vbo);
+    //vertex buffer stuff. We are telling our GPU to get some memory ready
+    GLuint vbo[2];
+    glGenBuffers(2, vbo);
 
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    //position is vbo[0]
+    glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(neu::vec3) * points.size(), points.data(), GL_STATIC_DRAW);
 
-    //vertex array
+    //color is vbo[1]
+    glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(neu::vec3) * colors.size(), colors.data(), GL_STATIC_DRAW);
+
+    //vertex array : contains a lot of the shader info.
     GLuint vao;
     glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
 
+    //binding position
     glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+    //binding color
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 
     //vertex shaders
     std::string vs_source;
@@ -37,6 +49,18 @@ int main(int argc, char* argv[]) {
     glShaderSource(vs, 1, &vs_cstr, NULL);
     glCompileShader(vs);
 
+    int success;
+    glGetShaderiv(vs, GL_COMPILE_STATUS, &success);
+    if (!success)
+    {
+        std::string infoLog(512, '\0');  // pre-allocate space
+        GLsizei length;
+        glGetShaderInfoLog(vs, (GLsizei)infoLog.size(), &length, &infoLog[0]);
+        infoLog.resize(length);
+
+        LOG_WARNING("Shader compilation failed: {}", infoLog);
+    }
+
     //fragment shaders
     std::string fs_source;
     neu::file::ReadTextFile("Shaders/basic.frag", fs_source);
@@ -46,6 +70,37 @@ int main(int argc, char* argv[]) {
     fs = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fs, 1, &fs_cstr, NULL);
     glCompileShader(fs);
+    
+    glGetShaderiv(vs, GL_COMPILE_STATUS, &success);
+    if (!success)
+    {
+        std::string infoLog(512, '\0');  // pre-allocate space
+        GLsizei length;
+        glGetShaderInfoLog(vs, (GLsizei)infoLog.size(), &length, &infoLog[0]);
+        infoLog.resize(length);
+
+        LOG_WARNING("Shader compilation failed: {}", infoLog);
+    }
+
+    //create program pipeline so both shaders are linked
+    GLuint shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, vs);
+    glAttachShader(shaderProgram, fs);
+    glLinkProgram(shaderProgram);
+
+    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+    if (!success)
+    {
+        std::string infoLog(512, '\0');  // pre-allocate space
+        GLsizei length;
+        glGetProgramInfoLog(shaderProgram, (GLsizei)infoLog.size(), &length, &infoLog[0]);
+        infoLog.resize(length);
+
+        LOG_WARNING("Program link failed: {}", infoLog);
+    }
+
+    //now we can use it!
+    glUseProgram(shaderProgram);
 
 
 
@@ -84,13 +139,16 @@ int main(int argc, char* argv[]) {
         scale.y = neu::math::sin(neu::GetEngine().GetTime().GetTime());
 
 
-        std::cout << neu::GetEngine().GetInput().GetMousePosition().x<<std::endl;
-        std::cout << neu::GetEngine().GetInput().GetMousePosition().y<<std::endl;
+        /*std::cout << neu::GetEngine().GetInput().GetMousePosition().x<<std::endl;
+        std::cout << neu::GetEngine().GetInput().GetMousePosition().y<<std::endl;*/
 
         // draw
         neu::GetEngine().GetRenderer().Clear();
 
-        glLoadIdentity();
+        glBindVertexArray(vao);
+        glDrawArrays(GL_TRIANGLES, 0, (GLsizei)points.size());
+
+       /* glLoadIdentity();
         glPushMatrix();
         glTranslatef(position.x, position.y, 0);
         glRotatef(angle, 0, angle, 0);
@@ -105,7 +163,7 @@ int main(int argc, char* argv[]) {
 
         glEnd();
 
-        glPopMatrix();
+        glPopMatrix();*/
         
         neu::GetEngine().GetRenderer().Present();
 
