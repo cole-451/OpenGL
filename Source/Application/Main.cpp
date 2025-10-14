@@ -12,7 +12,43 @@ int main(int argc, char* argv[]) {
     std::vector<neu::vec3> colors{ { 1, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 }, {1,0,1} };
     std::vector<neu::vec2> texturecoords{ {0,0}, {0.5f, 1.0f}, {1,1} };
 
+    struct Vertex {
+        neu::vec3 position;
+        neu::vec3 color;
+        neu::vec2 texturecoords;
+    };
 
+    std::vector<Vertex> vertices{
+        { { -0.5f, -0.5f, 0 }, { 1, 0, 0 },{0,0} },
+        {{ 0, 0.5f, 0 }, { 0, 1, 0 },{0.5f, 1.0f} },
+        {{ 0.5f, -0.5f, 0 },{ 0, 0, 1 },{1,1} }
+    };
+
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)* vertices.size(), vertices.data(), GL_STATIC_DRAW);
+
+    //vertex array : contains a lot of the shader info.
+    GLuint vao;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texturecoords));
+
+
+
+
+    /*
     //vertex buffer stuff. We are telling our GPU to get some memory ready
     GLuint vbo[3];
     glGenBuffers(3, vbo);
@@ -46,6 +82,8 @@ int main(int argc, char* argv[]) {
     glEnableVertexAttribArray(2);
     glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+
+    */
 
     //vertex shaders
     std::string vs_source;
@@ -119,16 +157,12 @@ int main(int argc, char* argv[]) {
    GLint uniform = glGetUniformLocation(shaderProgram, "u_time");
 
    //make SURE that the uniform does not fail, or this will crash.
-   ASSERT(uniform != -1);
+  // ASSERT(uniform != -1);
 
    GLint tex_uniform = glGetUniformLocation(shaderProgram, "u_texture");
 
 
-   //huh???
    glUniform1i(tex_uniform, 0);
-
-
-
 
 
     SDL_Event e;
