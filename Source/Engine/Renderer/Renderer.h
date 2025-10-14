@@ -150,8 +150,7 @@ namespace neu {
 		// SDL window handle
 		SDL_Window* m_window = nullptr;
 
-		// SDL renderer handle used for all drawing operations
-		SDL_Renderer* m_renderer = nullptr;
+		// OpenGL context
 		SDL_GLContext m_context;
 	};
 }

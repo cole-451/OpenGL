@@ -17,6 +17,9 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{3491326c-e8f0-40b8-b4f1-5ce8662f9e92}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Textures">
+      <UniqueIdentifier>{25f2f075-b3b2-492d-8d7f-e3d6baa6ac1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -53,5 +56,10 @@
     <None Include="..\..\Build\Assets\Shaders\basic.frag">
       <Filter>Shaders</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\Build\Assets\Textures\beast.png">
+      <Filter>Assets\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>
