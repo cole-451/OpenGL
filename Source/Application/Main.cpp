@@ -20,15 +20,24 @@ int main(int argc, char* argv[]) {
 
     std::vector<Vertex> vertices{
         { { -0.5f, -0.5f, 0 }, { 1, 0, 0 },{0,0} },
-        {{ 0, 0.5f, 0 }, { 0, 1, 0 },{0.5f, 1.0f} },
-        {{ 0.5f, -0.5f, 0 },{ 0, 0, 1 },{1,1} }
+        {{ 0, 0.5f, 0 }, { 0, 1, 0 },{0.0f, 1.0f} },
+        {{ 0.5f, 0.5f, 0 },{ 0, 0, 1 },{1,1} },
+        {{ 0.5f, -0.5f, 0 },{ 0, 0, 1 },{1,0} }
     };
+
+    std::vector<GLuint> indices{0, 1, 2, 2, 3, 0};
 
     GLuint vbo;
     glGenBuffers(1, &vbo);
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)* vertices.size(), vertices.data(), GL_STATIC_DRAW);
+    // index buffer
+    GLuint ebo;
+    glGenBuffers(1, &ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)* indices.size(), indices.data(), GL_STATIC_DRAW);
+
 
     //vertex array : contains a lot of the shader info.
     GLuint vao;
@@ -36,6 +45,7 @@ int main(int argc, char* argv[]) {
     glBindVertexArray(vao);
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
@@ -206,7 +216,9 @@ int main(int argc, char* argv[]) {
         neu::GetEngine().GetRenderer().Clear();
 
         glBindVertexArray(vao);
-        glDrawArrays(GL_TRIANGLES, 0, (GLsizei)points.size());
+        //glDrawArrays(GL_TRIANGLES, 0, (GLsizei)points.size());
+
+        glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 
        /* glLoadIdentity();
         glPushMatrix();

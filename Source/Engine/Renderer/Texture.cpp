@@ -30,6 +30,8 @@ namespace neu {
             return false;
         }
 
+        SDL_FlipSurface(surface, SDL_FLIP_VERTICAL);
+
         const SDL_PixelFormatDetails* details = SDL_GetPixelFormatDetails(surface->format);
 
         int channels = details->bytes_per_pixel;
