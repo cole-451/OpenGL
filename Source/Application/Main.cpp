@@ -96,47 +96,50 @@ int main(int argc, char* argv[]) {
     */
 
     //vertex shaders
-    std::string vs_source;
-    neu::file::ReadTextFile("Shaders/basic.vert", vs_source);
-    const char* vs_cstr = vs_source.c_str();
+    //std::string vs_source;
+    //neu::file::ReadTextFile("Shaders/basic.vert", vs_source);
+    //const char* vs_cstr = vs_source.c_str();
 
-    GLuint vs;
-    vs = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vs, 1, &vs_cstr, NULL);
-    glCompileShader(vs);
+    //GLuint vs;
+    //vs = glCreateShader(GL_VERTEX_SHADER);
+    //glShaderSource(vs, 1, &vs_cstr, NULL);
+    //glCompileShader(vs);
 
-    int success;
-    glGetShaderiv(vs, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        std::string infoLog(512, '\0');  // pre-allocate space
-        GLsizei length;
-        glGetShaderInfoLog(vs, (GLsizei)infoLog.size(), &length, &infoLog[0]);
-        infoLog.resize(length);
+    //int success;
+    //glGetShaderiv(vs, GL_COMPILE_STATUS, &success);
+    //if (!success)
+    //{
+    //    std::string infoLog(512, '\0');  // pre-allocate space
+    //    GLsizei length;
+    //    glGetShaderInfoLog(vs, (GLsizei)infoLog.size(), &length, &infoLog[0]);
+    //    infoLog.resize(length);
 
-        LOG_WARNING("Shader compilation failed: {}", infoLog);
-    }
+    //    LOG_WARNING("Shader compilation failed: {}", infoLog);
+    //}
 
-    //fragment shaders
-    std::string fs_source;
-    neu::file::ReadTextFile("Shaders/basic.frag", fs_source);
-    const char* fs_cstr = fs_source.c_str();
+    ////fragment shaders
+    //std::string fs_source;
+    //neu::file::ReadTextFile("Shaders/basic.frag", fs_source);
+    //const char* fs_cstr = fs_source.c_str();
 
-    GLuint fs;
-    fs = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fs, 1, &fs_cstr, NULL);
-    glCompileShader(fs);
-    
-    glGetShaderiv(vs, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        std::string infoLog(512, '\0');  // pre-allocate space
-        GLsizei length;
-        glGetShaderInfoLog(fs, (GLsizei)infoLog.size(), &length, &infoLog[0]);
-        infoLog.resize(length);
+    //GLuint fs;
+    //fs = glCreateShader(GL_FRAGMENT_SHADER);
+    //glShaderSource(fs, 1, &fs_cstr, NULL);
+    //glCompileShader(fs);
+    //
+    //glGetShaderiv(vs, GL_COMPILE_STATUS, &success);
+    //if (!success)
+    //{
+    //    std::string infoLog(512, '\0');  // pre-allocate space
+    //    GLsizei length;
+    //    glGetShaderInfoLog(fs, (GLsizei)infoLog.size(), &length, &infoLog[0]);
+    //    infoLog.resize(length);
 
-        LOG_WARNING("Shader compilation failed: {}", infoLog);
-    }
+    //    LOG_WARNING("Shader compilation failed: {}", infoLog);
+    //}
+
+    auto vs = neu::Resources().Get<neu::Shader>("shaders/basic.vert", GL_VERTEX_SHADER);
+    auto fs = neu::Resources().Get<neu::Shader>("shaders/basic.frag", GL_FRAGMENT_SHADER);
 
     //create program pipeline so both shaders are linked
     GLuint shaderProgram = glCreateProgram();
