@@ -42,6 +42,7 @@ bool neu::Program::Link()
 
 void neu::Program::Use()
 {
+	//glUseProgram(m_program);
 }
 
 void neu::Program::SetUniform(const std::string& name, float value)
