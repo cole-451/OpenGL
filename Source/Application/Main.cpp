@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
 
 	std::vector<Vertex> vertices{
 		{ { -0.5f, -0.5f, 0 }, { 1, 0, 0 },{0,0} },
-		{{ 0, 0.5f, 0 }, { 0, 1, 0 },{0.0f, 1.0f} },
+		{{ -0.5f, 0.5f, 0 }, { 0, 1, 0 },{0.0f, 1.0f} },
 		{{ 0.5f, 0.5f, 0 },{ 0, 0, 1 },{1,1} },
 		{{ 0.5f, -0.5f, 0 },{ 0, 0, 1 },{1,0} }
 	};
@@ -101,22 +101,22 @@ int main(int argc, char* argv[]) {
 	auto vs = neu::Resources().Get<neu::Shader>("Shaders/basic.vert", GL_VERTEX_SHADER);
 	auto fs = neu::Resources().Get<neu::Shader>("Shaders/basic.frag", GL_FRAGMENT_SHADER);
 
-
-
 	auto program = std::make_shared<neu::Program>();
 	program->AttachShader(vs);
 	program->AttachShader(fs);
 	program->Link();
 	program->Use();
 
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
+	model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 	
 	//something wrong here...
 	neu::res_t <neu::Texture> texture = neu::Resources().Get<neu::Texture>("Textures/beast.png");
 	
 	program->SetUniform("u_texture", 0);
-
-
-
+	program->SetUniform("u_model", model);
 
 	// now we need to make a connection to the uniform for the time variable we had
 	program->SetUniform("u_time", neu::GetEngine().GetTime().GetTime());
