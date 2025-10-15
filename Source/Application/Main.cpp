@@ -141,25 +141,30 @@ int main(int argc, char* argv[]) {
     auto vs = neu::Resources().Get<neu::Shader>("shaders/basic.vert", GL_VERTEX_SHADER);
     auto fs = neu::Resources().Get<neu::Shader>("shaders/basic.frag", GL_FRAGMENT_SHADER);
 
+    auto program = std::make_shared<neu::Program>();
+program->AttachShader(vs);
+program->AttachShader(fs);
+program->Link();
+program->Use();
     //create program pipeline so both shaders are linked
-    GLuint shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vs);
-    glAttachShader(shaderProgram, fs);
-    glLinkProgram(shaderProgram);
+    //GLuint shaderProgram = glCreateProgram();
+    //glAttachShader(shaderProgram, vs);
+    //glAttachShader(shaderProgram, fs);
+    //glLinkProgram(shaderProgram);
 
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-    if (!success)
-    {
-        std::string infoLog(512, '\0');  // pre-allocate space
-        GLsizei length;
-        glGetProgramInfoLog(shaderProgram, (GLsizei)infoLog.size(), &length, &infoLog[0]);
-        infoLog.resize(length);
+    //glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+    //if (!success)
+    //{
+    //    std::string infoLog(512, '\0');  // pre-allocate space
+    //    GLsizei length;
+    //    glGetProgramInfoLog(shaderProgram, (GLsizei)infoLog.size(), &length, &infoLog[0]);
+    //    infoLog.resize(length);
 
-        LOG_WARNING("Program link failed: {}", infoLog);
-    }
+    //    LOG_WARNING("Program link failed: {}", infoLog);
+    //}
 
     //now we can use it!
-    glUseProgram(shaderProgram);
+    //glUseProgram(shaderProgram);
 
 
     //something wrong here...
@@ -167,15 +172,15 @@ int main(int argc, char* argv[]) {
 
 
     // now we need to make a connection to the uniform for the time variable we had
-   GLint uniform = glGetUniformLocation(shaderProgram, "u_time");
+  // GLint uniform = glGetUniformLocation(shaderProgram, "u_time");
 
    //make SURE that the uniform does not fail, or this will crash.
   // ASSERT(uniform != -1);
 
-   GLint tex_uniform = glGetUniformLocation(shaderProgram, "u_texture");
+   //GLint tex_uniform = glGetUniformLocation(shaderProgram, "u_texture");
 
 
-   glUniform1i(tex_uniform, 0);
+   //glUniform1i(tex_uniform, 0);
 
 
     SDL_Event e;
@@ -194,7 +199,7 @@ int main(int argc, char* argv[]) {
 
         if (neu::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 
-        glUniform1f(uniform, neu::GetEngine().GetTime().GetTime());
+       // glUniform1f(uniform, neu::GetEngine().GetTime().GetTime());
 
 
          

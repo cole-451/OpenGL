@@ -108,7 +108,10 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Shader.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Program.cpp">
+      <Filter>Source\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -230,6 +233,9 @@
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Shader.h">
+      <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Program.h">
       <Filter>Source\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
