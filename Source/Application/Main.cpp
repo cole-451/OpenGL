@@ -32,6 +32,7 @@ int main(int argc, char* argv[]) {
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
+
 	// index buffer
 	GLuint ebo;
 	glGenBuffers(1, &ebo);
@@ -100,6 +101,8 @@ int main(int argc, char* argv[]) {
 	auto vs = neu::Resources().Get<neu::Shader>("Shaders/basic.vert", GL_VERTEX_SHADER);
 	auto fs = neu::Resources().Get<neu::Shader>("Shaders/basic.frag", GL_FRAGMENT_SHADER);
 
+
+
 	auto program = std::make_shared<neu::Program>();
 	program->AttachShader(vs);
 	program->AttachShader(fs);
@@ -108,6 +111,7 @@ int main(int argc, char* argv[]) {
 
 	
 	
+	program->SetUniform("u_texture", 0);
 
 
 	//something wrong here...
@@ -122,7 +126,6 @@ int main(int argc, char* argv[]) {
    // ASSERT(uniform != -1);
 
 	//GLint tex_uniform = glGetUniformLocation(program->m_program, "u_texture");
-	program->SetUniform("u_texture", 0);
 
 
 
