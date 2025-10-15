@@ -7,12 +7,12 @@ uniform float u_time;
 
 uniform sampler2D u_texture;
 
-in vec2 v_textcoords;
+in vec2 v_texturecoords;
 
 void main(){
 float offset = sin(u_time + gl_FragCoord.x);
 
 
-f_color = texture(u_texture, v_textcoords) * vec4(v_color, 1);
+f_color = texture(u_texture, v_texturecoords) * vec4(v_color, 1);
 
 }

@@ -110,22 +110,20 @@ int main(int argc, char* argv[]) {
 	program->Use();
 
 	
+	//something wrong here...
+	neu::res_t <neu::Texture> texture = neu::Resources().Get<neu::Texture>("Textures/beast.png");
 	
 	program->SetUniform("u_texture", 0);
 
 
-	//something wrong here...
-	neu::res_t <neu::Texture> texture = neu::Resources().Get<neu::Texture>("Textures/beast.png");
 
 
 	// now we need to make a connection to the uniform for the time variable we had
-	//GLint uniform = glGetUniformLocation(program->m_program, "u_time");
 	program->SetUniform("u_time", neu::GetEngine().GetTime().GetTime());
 
 	//make SURE that the uniform does not fail, or this will crash.
    // ASSERT(uniform != -1);
 
-	//GLint tex_uniform = glGetUniformLocation(program->m_program, "u_texture");
 
 
 
@@ -163,15 +161,10 @@ int main(int argc, char* argv[]) {
 		scale.x = neu::math::sin(neu::GetEngine().GetTime().GetTime());
 		scale.y = neu::math::sin(neu::GetEngine().GetTime().GetTime());
 
-
-		/*std::cout << neu::GetEngine().GetInput().GetMousePosition().x<<std::endl;
-		std::cout << neu::GetEngine().GetInput().GetMousePosition().y<<std::endl;*/
-
 		// draw
 		neu::GetEngine().GetRenderer().Clear();
 
 		glBindVertexArray(vao);
-		//glDrawArrays(GL_TRIANGLES, 0, (GLsizei)points.size());
 
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 
