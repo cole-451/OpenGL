@@ -101,11 +101,16 @@ int main(int argc, char* argv[]) {
 	auto vs = neu::Resources().Get<neu::Shader>("Shaders/basic.vert", GL_VERTEX_SHADER);
 	auto fs = neu::Resources().Get<neu::Shader>("Shaders/basic.frag", GL_FRAGMENT_SHADER);
 
+
 	auto program = std::make_shared<neu::Program>();
 	program->AttachShader(vs);
 	program->AttachShader(fs);
 	program->Link();
 	program->Use();
+
+
+
+	float rotation = 0;
 
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
@@ -121,9 +126,7 @@ int main(int argc, char* argv[]) {
 	// now we need to make a connection to the uniform for the time variable we had
 	program->SetUniform("u_time", neu::GetEngine().GetTime().GetTime());
 
-	//make SURE that the uniform does not fail, or this will crash.
-   // ASSERT(uniform != -1);
-
+	glm::vec3 evilEye{ 0,0,5 };
 
 
 
@@ -144,7 +147,25 @@ int main(int argc, char* argv[]) {
 
 		if (neu::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 
+		rotation += neu::GetEngine().GetTime().GetDeltaTime();
+
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		program->SetUniform("u_model", model);
+
+		evilEye.x = neu::GetEngine().GetInput().GetMouseDelta().x;
+		evilEye.z = neu::GetEngine().GetInput().GetMouseDelta().y;
+
+		glm::mat4 view = glm::lookAt(evilEye, evilEye * glm::vec3{0,0,-1},glm::vec3{0,1,0});
 		
+		program->SetUniform("u_view", view);
+
+		float aspect = (float)neu::GetEngine().GetRenderer().GetWidth() * neu::GetEngine().GetRenderer().GetHeight();
+
+		glm::mat4 projection = glm::perspective(glm::radians(90.0f), aspect, 0.01f, 100.0f);
+		program->SetUniform("u_projection", projection);
 
 
 
