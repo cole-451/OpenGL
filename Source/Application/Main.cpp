@@ -37,6 +37,10 @@ int main(int argc, char* argv[]) {
 	vb->SetAttribute(2, 2, sizeof(Vertex), offsetof(Vertex, texturecoords));
 	
 
+	auto model3d = std::make_shared<neu::Model>();
+	model3d->Load("Models/Flynn.obj");
+
+
 	//shaders
 	auto vs = neu::Resources().Get<neu::Shader>("Shaders/basic.vert", GL_VERTEX_SHADER);
 	auto fs = neu::Resources().Get<neu::Shader>("Shaders/basic.frag", GL_FRAGMENT_SHADER);
@@ -66,7 +70,7 @@ int main(int argc, char* argv[]) {
 	// now we need to make a connection to the uniform for the time variable we had
 	program->SetUniform("u_time", neu::GetEngine().GetTime().GetTime());
 
-	glm::vec3 evilEye{ 0,0,5 };
+	glm::vec3 evilEye{ 0,50,50 };
 
 
 
@@ -128,7 +132,9 @@ int main(int argc, char* argv[]) {
 		// draw
 		neu::GetEngine().GetRenderer().Clear();
 
-		vb->Draw(GL_TRIANGLES);
+		//vb->Draw(GL_TRIANGLES);
+
+		model3d->Draw(GL_TRIANGLES);
 		
 
 
