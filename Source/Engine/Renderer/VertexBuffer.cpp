@@ -20,7 +20,7 @@ void neu::VertexBuffer::Draw(GLenum primitiveType)
 	glBindVertexArray(m_vao);
 
 	if (m_ibo) {
-	glDrawElements(primitiveType, m_indexCount, m_indexType, 0);
+		glDrawElements(primitiveType, m_indexCount, m_indexType, 0);
 	}
 	else if (m_vbo) {
 		glDrawArrays(primitiveType, 0, m_vertexCount);

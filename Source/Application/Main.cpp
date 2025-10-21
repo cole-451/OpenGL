@@ -30,17 +30,12 @@ int main(int argc, char* argv[]) {
 	//vertex buffer
 	neu::res_t<neu::VertexBuffer> vb = std::make_shared<neu::VertexBuffer>();
 	vb->CreateVertexBuffer((GLsizei)sizeof(Vertex)* vertices.size(), (GLsizei)vertices.size(), vertices.data());
-	vb->CreateIndexBuffer(GL_UNSIGNED_INT, (GLsizei)indices.size(), indices.data());
+	vb->CreateIndexBuffer(GL_UNSIGNED_SHORT, (GLsizei)indices.size(), indices.data());
 
 	vb->SetAttribute(0, 3, sizeof(Vertex), offsetof(Vertex, position));
 	vb->SetAttribute(1, 3, sizeof(Vertex), offsetof(Vertex, color));
 	vb->SetAttribute(2, 2, sizeof(Vertex), offsetof(Vertex, texturecoords));
 	
-
-
-
-	
-
 
 	//shaders
 	auto vs = neu::Resources().Get<neu::Shader>("Shaders/basic.vert", GL_VERTEX_SHADER);
@@ -89,10 +84,10 @@ int main(int argc, char* argv[]) {
 
 		// update
 		neu::GetEngine().Update();
-
+		float dt = neu::GetEngine().GetTime().GetDeltaTime();
 		if (neu::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 
-		rotation += neu::GetEngine().GetTime().GetDeltaTime();
+		rotation += dt;
 
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
@@ -100,14 +95,17 @@ int main(int argc, char* argv[]) {
 		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 		program->SetUniform("u_model", model);
 
-		evilEye.x = neu::GetEngine().GetInput().GetMouseDelta().x;
-		evilEye.z = neu::GetEngine().GetInput().GetMouseDelta().y;
+		//evilEye.x = neu::GetEngine().GetInput().GetMouseDelta().x;
+		//evilEye.z = neu::GetEngine().GetInput().GetMouseDelta().y;
 
-		glm::mat4 view = glm::lookAt(evilEye, evilEye * glm::vec3{0,0,-1},glm::vec3{0,1,0});
+		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_A)) evilEye.x -= 5 * dt;
+		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_D)) evilEye.x += 5 * dt;
+
+		glm::mat4 view = glm::lookAt(evilEye, evilEye + glm::vec3{0,0,-1},glm::vec3{0,1,0});
 		
 		program->SetUniform("u_view", view);
 
-		float aspect = (float)neu::GetEngine().GetRenderer().GetWidth() * neu::GetEngine().GetRenderer().GetHeight();
+		float aspect = (float)neu::GetEngine().GetRenderer().GetWidth() / neu::GetEngine().GetRenderer().GetHeight();
 
 		glm::mat4 projection = glm::perspective(glm::radians(90.0f), aspect, 0.01f, 100.0f);
 		program->SetUniform("u_projection", projection);

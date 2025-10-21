@@ -19,6 +19,6 @@ void main()
 	//gl_Position = vec4(a_position * sin(u_time), 1.0);
 	
 	gl_Position = u_projection * u_view * u_model * vec4(a_position, 1.0);
-
+	//gl_Position = vec4(a_position, 1.0);
 
 }
