@@ -25,79 +25,24 @@ int main(int argc, char* argv[]) {
 		{{ 0.5f, -0.5f, 0 },{ 0, 0, 1 },{1,0} }
 	};
 
-	std::vector<GLuint> indices{ 0, 1, 2, 2, 3, 0 };
+	std::vector<GLshort> indices{ 0, 1, 2, 2, 3, 0 };
 
-	GLuint vbo;
-	glGenBuffers(1, &vbo);
+	//vertex buffer
+	neu::res_t<neu::VertexBuffer> vb = std::make_shared<neu::VertexBuffer>();
+	vb->CreateVertexBuffer((GLsizei)sizeof(Vertex)* vertices.size(), (GLsizei)vertices.size(), vertices.data());
+	vb->CreateIndexBuffer(GL_UNSIGNED_INT, (GLsizei)indices.size(), indices.data());
 
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
-
-	// index buffer
-	GLuint ebo;
-	glGenBuffers(1, &ebo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * indices.size(), indices.data(), GL_STATIC_DRAW);
-
-
-	//vertex array : contains a lot of the shader info.
-	GLuint vao;
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texturecoords));
+	vb->SetAttribute(0, 3, sizeof(Vertex), offsetof(Vertex, position));
+	vb->SetAttribute(1, 3, sizeof(Vertex), offsetof(Vertex, color));
+	vb->SetAttribute(2, 2, sizeof(Vertex), offsetof(Vertex, texturecoords));
+	
 
 
 
-
-	/*
-	//vertex buffer stuff. We are telling our GPU to get some memory ready
-	GLuint vbo[3];
-	glGenBuffers(3, vbo);
-
-	//position is vbo[0]
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(neu::vec3) * points.size(), points.data(), GL_STATIC_DRAW);
-
-	//color is vbo[1]
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(neu::vec3) * colors.size(), colors.data(), GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(neu::vec2) * texturecoords.size(), texturecoords.data(), GL_STATIC_DRAW);
-
-	//vertex array : contains a lot of the shader info.
-	GLuint vao;
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
-
-	//binding position
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-
-	//binding color
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-
-	glEnableVertexAttribArray(2);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, NULL);
-
-	*/
+	
 
 
-
+	//shaders
 	auto vs = neu::Resources().Get<neu::Shader>("Shaders/basic.vert", GL_VERTEX_SHADER);
 	auto fs = neu::Resources().Get<neu::Shader>("Shaders/basic.frag", GL_FRAGMENT_SHADER);
 
@@ -185,9 +130,8 @@ int main(int argc, char* argv[]) {
 		// draw
 		neu::GetEngine().GetRenderer().Clear();
 
-		glBindVertexArray(vao);
-
-		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+		vb->Draw(GL_TRIANGLES);
+		
 
 
 
