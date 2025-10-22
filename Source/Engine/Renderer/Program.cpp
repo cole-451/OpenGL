@@ -69,13 +69,13 @@ void neu::Program::SetUniform(const std::string& name, bool value)
 	if (location != -1) glUniform1i(location, value);
 }
 
-void neu::Program::SetUniform(const std::string& name, const neu::vec2& value)
+void neu::Program::SetUniform(const std::string& name, const glm::vec2& value)
 {
 	GLint location = GetUniformLocation(name);
 	if (location != -1) glUniform2f(location, value.x, value.y);
 }
 
-void neu::Program::SetUniform(const std::string& name, const neu::vec3& value)
+void neu::Program::SetUniform(const std::string& name, const glm::vec3& value)
 {
 	GLint location = GetUniformLocation(name);
 	if (location != -1) glUniform3f(location, value.x, value.y, value.z);

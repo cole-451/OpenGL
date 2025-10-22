@@ -38,12 +38,12 @@ int main(int argc, char* argv[]) {
 	
 
 	auto model3d = std::make_shared<neu::Model>();
-	model3d->Load("Models/Flynn.obj");
+	model3d->Load("Models/Abe.obj");
 
 
 	//shaders
-	auto vs = neu::Resources().Get<neu::Shader>("Shaders/basic.vert", GL_VERTEX_SHADER);
-	auto fs = neu::Resources().Get<neu::Shader>("Shaders/basic.frag", GL_FRAGMENT_SHADER);
+	auto vs = neu::Resources().Get<neu::Shader>("Shaders/basic_lit.vert", GL_VERTEX_SHADER);
+	auto fs = neu::Resources().Get<neu::Shader>("Shaders/basic_lit.frag", GL_FRAGMENT_SHADER);
 
 
 	auto program = std::make_shared<neu::Program>();
@@ -65,13 +65,18 @@ int main(int argc, char* argv[]) {
 	neu::res_t <neu::Texture> texture = neu::Resources().Get<neu::Texture>("Textures/beast.png");
 	
 	program->SetUniform("u_texture", 0);
+	//lights
+	program->SetUniform("u_ambient_light", glm::vec3{ 0.5 });
+	neu::Transform light({2, 4, 7});
+
+
 	program->SetUniform("u_model", model);
 
 	// now we need to make a connection to the uniform for the time variable we had
 	program->SetUniform("u_time", neu::GetEngine().GetTime().GetTime());
 
 	glm::vec3 evilEye{ 0,50,50 };
-
+	neu::Transform camera{ { 0, 50, 50 } };
 
 
 
@@ -102,12 +107,30 @@ int main(int argc, char* argv[]) {
 		//evilEye.x = neu::GetEngine().GetInput().GetMouseDelta().x;
 		//evilEye.z = neu::GetEngine().GetInput().GetMouseDelta().y;
 
-		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_A)) evilEye.x -= 5 * dt;
-		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_D)) evilEye.x += 5 * dt;
+		//if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_A)) evilEye.x -= 5 * dt;
+		//if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_D)) evilEye.x += 5 * dt;
 
-		glm::mat4 view = glm::lookAt(evilEye, evilEye + glm::vec3{0,0,-1},glm::vec3{0,1,0});
+		float speed = 10.0f;
+		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_A)) camera.position.x -= speed * dt;
+		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_D)) camera.position.x += speed * dt;
+
+		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_W)) camera.position.y += speed * dt;
+		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_S)) camera.position.y -= speed * dt;
+
+		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_Q)) camera.position.z += speed * dt;
+		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_E)) camera.position.z -= speed * dt;
+
+
+		//glm::mat4 view = glm::lookAt(evilEye, evilEye + glm::vec3{0,0,-1},glm::vec3{0,1,0});
+		glm::mat4 view = glm::lookAt(camera.position, camera.position + glm::vec3{ 0, 0, -1 }, glm::vec3{ 0, 1, 0 });
+		//program->SetUniform("u_view", view);
 		
 		program->SetUniform("u_view", view);
+
+		light.position.x = neu::math::sin(neu::GetEngine().GetTime().GetTime() * 10);
+		program->SetUniform("u_light.position", light.position);
+		
+		program->SetUniform("u_light.color", glm::vec3({1,0,4}));
 
 		float aspect = (float)neu::GetEngine().GetRenderer().GetWidth() / neu::GetEngine().GetRenderer().GetHeight();
 
