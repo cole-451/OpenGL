@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
 	model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 	
 	//something wrong here...
-	neu::res_t <neu::Texture> texture = neu::Resources().Get<neu::Texture>("Textures/beast.png");
+	neu::res_t <neu::Texture> texture = neu::Resources().Get<neu::Texture>("Textures/Abev1/abe_clothes_BaseColor.png");
 	
 	program->SetUniform("u_texture", 0);
 	//lights
@@ -130,7 +130,7 @@ int main(int argc, char* argv[]) {
 		light.position.x = neu::math::sin(neu::GetEngine().GetTime().GetTime() * 10);
 		program->SetUniform("u_light.position", light.position);
 		
-		program->SetUniform("u_light.color", glm::vec3({1,0,4}));
+		program->SetUniform("u_light.color", glm::vec3({2,0,4}));
 
 		float aspect = (float)neu::GetEngine().GetRenderer().GetWidth() / neu::GetEngine().GetRenderer().GetHeight();
 

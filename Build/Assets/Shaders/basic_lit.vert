@@ -5,7 +5,7 @@ layout (location = 1) in vec3 a_color;
 layout (location = 2) in vec2 a_texturecoords;
 layout (location = 3) in vec3 a_normal;
 
-flat out vec3 v_color;
+ out vec3 v_color;
 out vec2 v_texturecoords;
 
 uniform float u_time;
@@ -28,7 +28,15 @@ float intensity = max(dot(light_dir, normal), 0);
 
 vec3 diffuse = u_light.color * intensity;
 
-return u_ambient_light + diffuse;
+//specular
+vec3 reflection = reflect(-light_dir, normal);
+vec3 view_dir = normalize(-position);
+intensity = max(dot(reflection, view_dir), 0);
+intensity = pow(intensity, 128);
+vec3 specular = vec3(intensity);
+
+
+return u_ambient_light + diffuse + specular;
 }
 
 void main()
