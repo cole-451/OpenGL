@@ -46,10 +46,11 @@ int main(int argc, char* argv[]) {
 	auto fs = neu::Resources().Get<neu::Shader>("Shaders/basic_lit.frag", GL_FRAGMENT_SHADER);
 
 
-	auto program = std::make_shared<neu::Program>();
-	program->AttachShader(vs);
-	program->AttachShader(fs);
-	program->Link();
+	//auto program = std::make_shared<neu::Program>();
+	auto program = neu::Resources().Get<neu::Program>("Shaders/basic_lit.prog");
+	//program->AttachShader(vs);
+	//program->AttachShader(fs);
+	//program->Link();
 	program->Use();
 
 
@@ -154,11 +155,21 @@ int main(int argc, char* argv[]) {
 
 		// draw
 		neu::GetEngine().GetRenderer().Clear();
+		// start new ImGui frame
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplSDL3_NewFrame();
+		ImGui::NewFrame();
+		// set ImGui
+		ImGui::Begin("Editor");
+		ImGui::Text("Hello World");
+		ImGui::Text("Press 'Esc' to quit.");
+		ImGui::End();
 
 		//vb->Draw(GL_TRIANGLES);
 
 		model3d->Draw(GL_TRIANGLES);
-		
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 
 
