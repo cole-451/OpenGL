@@ -40,15 +40,21 @@ int main(int argc, char* argv[]) {
 	auto model3d = std::make_shared<neu::Model>();
 	model3d->Load("Models/Abe.obj");
 
+	//material
+
+	auto material = neu::Resources().Get<neu::Material>("Materials/abe1.mat");
+
+	material->Bind();
+
 
 	//shaders
 	auto vs = neu::Resources().Get<neu::Shader>("Shaders/basic_lit.vert", GL_VERTEX_SHADER);
 	auto fs = neu::Resources().Get<neu::Shader>("Shaders/basic_lit.frag", GL_FRAGMENT_SHADER);
 
 
-	auto program = neu::Resources().Get<neu::Program>("Shaders/basic_lit.prog");
+	//auto program = neu::Resources().Get<neu::Program>("Shaders/basic_lit.prog");
 	
-	program->Use();
+	//program->Use();
 
 
 
@@ -62,17 +68,17 @@ int main(int argc, char* argv[]) {
 	//something wrong here...
 	neu::res_t <neu::Texture> texture = neu::Resources().Get<neu::Texture>("Textures/Abev1/abe_clothes_BaseColor.png");
 	
-	program->SetUniform("u_texture", 0);
+	material->program->SetUniform("u_texture", 0);
 	//lights
-	program->SetUniform("u_ambient_light", glm::vec3{ 0.5 });
+	material->program->SetUniform("u_ambient_light", glm::vec3{ 0.5 });
 	neu::Transform light({2, 4, 7});
 	glm::vec3 lightcolor{ 1 };
 
 
-	program->SetUniform("u_model", model);
+	material->program->SetUniform("u_model", model);
 
 	// now we need to make a connection to the uniform for the time variable we had
-	program->SetUniform("u_time", neu::GetEngine().GetTime().GetTime());
+	material->program->SetUniform("u_time", neu::GetEngine().GetTime().GetTime());
 
 	glm::vec3 evilEye{ 0,50,50 };
 	neu::Transform camera{ { 0, 50, 50 } };
@@ -103,7 +109,7 @@ int main(int argc, char* argv[]) {
 		model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
 		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
 		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
-		program->SetUniform("u_model", model);
+		material->program->SetUniform("u_model", model);
 
 		//evilEye.x = neu::GetEngine().GetInput().GetMouseDelta().x;
 		//evilEye.z = neu::GetEngine().GetInput().GetMouseDelta().y;
@@ -126,17 +132,17 @@ int main(int argc, char* argv[]) {
 		glm::mat4 view = glm::lookAt(camera.position, camera.position + glm::vec3{ 0, 0, -1 }, glm::vec3{ 0, 1, 0 });
 		//program->SetUniform("u_view", view);
 		
-		program->SetUniform("u_view", view);
+		material->program->SetUniform("u_view", view);
 
 		light.position.x = neu::math::sin(neu::GetEngine().GetTime().GetTime() * 10);
-		program->SetUniform("u_light.position", light.position);
+		material->program->SetUniform("u_light.position", light.position);
 		
-		program->SetUniform("u_light.color", lightcolor);
+		material->program->SetUniform("u_light.color", lightcolor);
 
 		float aspect = (float)neu::GetEngine().GetRenderer().GetWidth() / neu::GetEngine().GetRenderer().GetHeight();
 
 		glm::mat4 projection = glm::perspective(glm::radians(90.0f), aspect, 0.01f, 100.0f);
-		program->SetUniform("u_projection", projection);
+		material->program->SetUniform("u_projection", projection);
 
 
 
@@ -164,10 +170,12 @@ int main(int argc, char* argv[]) {
 		ImGui::DragFloat3("position", glm::value_ptr(light.position), 0.1f);
 		//ImGui::DragFloat3("Color", glm::value_ptr(lightcolor)); keeping this because i thought this made it look cool
 		ImGui::ColorPicker3("Color", glm::value_ptr(lightcolor));
+		ImGui::DragFloat("shininess", &material->shininess, 0.1f);
+		ImGui::DragFloat2("tiling", glm::value_ptr(material->tiling), 0.1f);
 		ImGui::Text("Press 'Esc' to quit.");
 		ImGui::End();
 
-
+		material->Bind();
 		model3d->Draw(GL_TRIANGLES);
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

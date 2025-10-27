@@ -1,7 +1,7 @@
 {
-"program": "Shaders/basic_lit.prog",
-"texture": "Textures/Abev1/abe_clothes_BaseColor.png"
-"shininess": 128,
-"tiling": [1,1],
-"offset": [0,0]
+	"program": "Shaders/basic_lit.prog",
+	"texture": "Textures/Abev1/abe_clothes_BaseColor.png",
+	"shininess": 128,
+	"tiling": [1,1],
+	"offset": [0,0]
 }
