@@ -22,6 +22,13 @@ vec3 position;
 vec3 color;
 }u_light;
 
+uniform struct material{
+sampler2D texture;
+	float shininess;
+	vec2 tiling;
+	vec2 offset;
+}u_material;
+
 vec3 calculateLight(vec3 position, vec3 normal){
 vec3 light_dir = normalize( u_light.position - position);
 float intensity = max(dot(light_dir, normal), 0);
@@ -32,7 +39,7 @@ vec3 diffuse = u_light.color * intensity;
 vec3 reflection = reflect(-light_dir, normal);
 vec3 view_dir = normalize(-position);
 intensity = max(dot(reflection, view_dir), 0);
-intensity = pow(intensity, 128);
+intensity = pow(intensity, u_material.shininess);
 vec3 specular = vec3(intensity);
 
 
@@ -41,7 +48,7 @@ return u_ambient_light + diffuse + specular;
 
 void main()
 {
-	v_texturecoords = a_texturecoords;
+	v_texturecoords = a_texturecoords * u_material.tiling + u_material.offset;
 
 	mat4 model_view = u_view * u_model;
 	vec3 position = vec3(model_view * vec4(a_position, 1));

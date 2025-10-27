@@ -5,6 +5,13 @@ in vec2 v_texturecoords;
 
 out vec4 f_color;
 
+uniform struct material{
+sampler2D texture;
+	float shininess;
+	vec2 tiling;
+	vec2 offset;
+}u_material;
+
 uniform sampler2D u_texture;
 
 void main(){

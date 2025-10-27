@@ -20,6 +20,9 @@
     <Filter Include="Assets\Textures">
       <UniqueIdentifier>{25f2f075-b3b2-492d-8d7f-e3d6baa6ac1d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Materials">
+      <UniqueIdentifier>{52fcfa12-5f81-470b-970f-64867574d4b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -64,6 +67,9 @@
     </None>
     <None Include="..\..\Build\Assets\Shaders\basic_lit.prog">
       <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\abe1.mat">
+      <Filter>Assets\Materials</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

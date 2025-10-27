@@ -46,11 +46,8 @@ int main(int argc, char* argv[]) {
 	auto fs = neu::Resources().Get<neu::Shader>("Shaders/basic_lit.frag", GL_FRAGMENT_SHADER);
 
 
-	//auto program = std::make_shared<neu::Program>();
 	auto program = neu::Resources().Get<neu::Program>("Shaders/basic_lit.prog");
-	//program->AttachShader(vs);
-	//program->AttachShader(fs);
-	//program->Link();
+	
 	program->Use();
 
 
@@ -69,6 +66,7 @@ int main(int argc, char* argv[]) {
 	//lights
 	program->SetUniform("u_ambient_light", glm::vec3{ 0.5 });
 	neu::Transform light({2, 4, 7});
+	glm::vec3 lightcolor{ 1 };
 
 
 	program->SetUniform("u_model", model);
@@ -90,7 +88,9 @@ int main(int argc, char* argv[]) {
 			if (e.type == SDL_EVENT_QUIT) {
 				quit = true;
 			}
+			ImGui_ImplSDL3_ProcessEvent(&e); // allows for us to move and scale the GUI
 		}
+
 
 		// update
 		neu::GetEngine().Update();
@@ -131,7 +131,7 @@ int main(int argc, char* argv[]) {
 		light.position.x = neu::math::sin(neu::GetEngine().GetTime().GetTime() * 10);
 		program->SetUniform("u_light.position", light.position);
 		
-		program->SetUniform("u_light.color", glm::vec3({2,0,4}));
+		program->SetUniform("u_light.color", lightcolor);
 
 		float aspect = (float)neu::GetEngine().GetRenderer().GetWidth() / neu::GetEngine().GetRenderer().GetHeight();
 
@@ -161,11 +161,12 @@ int main(int argc, char* argv[]) {
 		ImGui::NewFrame();
 		// set ImGui
 		ImGui::Begin("Editor");
-		ImGui::Text("Hello World");
+		ImGui::DragFloat3("position", glm::value_ptr(light.position), 0.1f);
+		//ImGui::DragFloat3("Color", glm::value_ptr(lightcolor)); keeping this because i thought this made it look cool
+		ImGui::ColorPicker3("Color", glm::value_ptr(lightcolor));
 		ImGui::Text("Press 'Esc' to quit.");
 		ImGui::End();
 
-		//vb->Draw(GL_TRIANGLES);
 
 		model3d->Draw(GL_TRIANGLES);
 		ImGui::Render();

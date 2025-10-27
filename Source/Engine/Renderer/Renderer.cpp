@@ -33,6 +33,7 @@ namespace neu {
         SDL_GL_DestroyContext(m_context);   // Destroy the OpenGL context
         SDL_DestroyWindow(m_window);        // Destroy the window
         SDL_Quit();                         // Shutdown SDL
+
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplSDL3_Shutdown();
         ImGui::DestroyContext();
