@@ -71,6 +71,15 @@
     <None Include="..\..\Build\Assets\Materials\abe1.mat">
       <Filter>Assets\Materials</Filter>
     </None>
+    <None Include="..\..\Build\Assets\Shaders\basic_phong.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\basic_phong.prog">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\basic_phong.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\Build\Assets\Textures\beast.png">

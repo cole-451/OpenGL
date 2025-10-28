@@ -7,6 +7,9 @@ layout (location = 3) in vec3 a_normal;
 
  out vec3 v_color;
 out vec2 v_texturecoords;
+out vec3 v_position;
+out vec3 v_normal;
+
 
 uniform float u_time;
 uniform mat4 u_model;
@@ -33,22 +36,6 @@ uniform struct material{
 }u_material;
 
 
-vec3 calculateLight(vec3 position, vec3 normal){
-vec3 light_dir = normalize( u_light.position - position);
-float intensity = max(dot(light_dir, normal), 0);
-
-vec3 diffuse = u_light.color * u_material.baseColor * intensity;
-
-//specular
-vec3 reflection = reflect(-light_dir, normal);
-vec3 view_dir = normalize(-position);
-intensity = max(dot(reflection, view_dir), 0);
-intensity = pow(intensity, u_material.shininess);
-vec3 specular = vec3(intensity);
-
-
-return u_ambient_light + diffuse + specular;
-}
 
 void main()
 {
@@ -61,7 +48,6 @@ void main()
 
 
 
-	v_color = calculateLight(position, normal);
 	
 	gl_Position = u_projection * u_view * u_model * vec4(a_position, 1.0);
 

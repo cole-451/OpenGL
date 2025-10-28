@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
 
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
-	model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	model = glm::rotate(model, glm::radians(0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 	
 	//something wrong here...
@@ -170,9 +170,10 @@ int main(int argc, char* argv[]) {
 		ImGui::DragFloat3("position", glm::value_ptr(light.position), 0.1f);
 		//ImGui::DragFloat3("Color", glm::value_ptr(lightcolor)); keeping this because i thought this made it look cool
 		ImGui::ColorPicker3("Color", glm::value_ptr(lightcolor));
-		ImGui::DragFloat("shininess", &material->shininess, 0.1f);
-		ImGui::DragFloat2("tiling", glm::value_ptr(material->tiling), 0.1f);
-		ImGui::Text("Press 'Esc' to quit.");
+		material->UpdateGui();
+		// how  do i get that transform?!?!?!?!
+
+		
 		ImGui::End();
 
 		material->Bind();
