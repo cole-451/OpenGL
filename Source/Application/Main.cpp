@@ -66,10 +66,10 @@ int main(int argc, char* argv[]) {
 	model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 	
 	//something wrong here...
-	neu::res_t <neu::Texture> texture = neu::Resources().Get<neu::Texture>("Textures/Abev1/abe_clothes_BaseColor.png");
+	//neu::res_t <neu::Texture> texture = neu::Resources().Get<neu::Texture>("Textures/Abev1/abe_clothes_BaseColor.png");
 	
 	//should this be baseMap?
-	material->program->SetUniform("u_texture", 0);
+	material->program->SetUniform("u_material.baseMap", 0);
 	//lights
 	material->program->SetUniform("u_ambient_light", glm::vec3{ 0.5 });
 	neu::Transform light({2, 4, 7});
@@ -77,6 +77,10 @@ int main(int argc, char* argv[]) {
 
 
 	material->program->SetUniform("u_model", model);
+
+	neu::Transform transform{ { 0, 0, 0 } };
+
+	material->program->SetUniform("u_model", transform.GetMatrix());
 
 	// now we need to make a connection to the uniform for the time variable we had
 	material->program->SetUniform("u_time", neu::GetEngine().GetTime().GetTime());
@@ -172,6 +176,7 @@ int main(int argc, char* argv[]) {
 		//ImGui::DragFloat3("Color", glm::value_ptr(lightcolor)); keeping this because i thought this made it look cool
 		ImGui::ColorPicker3("Color", glm::value_ptr(lightcolor));
 		material->UpdateGui();
+		transform.UpdateGui();
 		// how  do i get that transform?!?!?!?!
 
 		
