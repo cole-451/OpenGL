@@ -18,8 +18,6 @@ uniform struct material{
 	vec2 offset;
 }u_material;
 
-uniform vec3 u_ambient_light;
-uniform sampler2D u_texture;
 
 
 uniform struct light
@@ -27,6 +25,9 @@ uniform struct light
 vec3 position;
 vec3 color;
 }u_light;
+
+uniform vec3 u_ambient_light;
+//uniform sampler2D u_texture;
 
 vec3 calculateLight(vec3 position, vec3 normal){
 vec3 light_dir = normalize( u_light.position - position);

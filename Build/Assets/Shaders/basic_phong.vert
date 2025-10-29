@@ -1,9 +1,9 @@
 #version 460 core
 
 layout (location = 0) in vec3 a_position;
-layout (location = 1) in vec3 a_color;
-layout (location = 2) in vec2 a_texturecoords;
-layout (location = 3) in vec3 a_normal;
+//layout (location = 1) in vec3 a_color;
+layout (location = 1) in vec2 a_texturecoords;
+layout (location = 2) in vec3 a_normal;
 
  out vec3 v_color;
 out vec2 v_texturecoords;
@@ -45,8 +45,6 @@ void main()
 	vec3 position = vec3(model_view * vec4(a_position, 1));
 
 	vec3 normal = normalize(mat3(model_view) * a_normal);
-
-
 
 	
 	gl_Position = u_projection * u_view * u_model * vec4(a_position, 1.0);

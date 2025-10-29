@@ -62,12 +62,13 @@ int main(int argc, char* argv[]) {
 
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
-	model = glm::rotate(model, glm::radians(0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 	
 	//something wrong here...
 	neu::res_t <neu::Texture> texture = neu::Resources().Get<neu::Texture>("Textures/Abev1/abe_clothes_BaseColor.png");
 	
+	//should this be baseMap?
 	material->program->SetUniform("u_texture", 0);
 	//lights
 	material->program->SetUniform("u_ambient_light", glm::vec3{ 0.5 });
@@ -103,7 +104,7 @@ int main(int argc, char* argv[]) {
 		float dt = neu::GetEngine().GetTime().GetDeltaTime();
 		if (neu::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 
-		rotation += dt;
+		//rotation += dt;
 
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
