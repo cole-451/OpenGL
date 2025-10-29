@@ -43,10 +43,33 @@ vec3 diffuse = u_light.color * u_material.baseColor * intensity;
 
 //specular
 vec3 reflection = reflect(-light_dir, normal);
-vec3 view_dir = normalize(-position);
-intensity = max(dot(reflection, view_dir), 0);
+//vec3 view_dir = normalize(-position);
+//intensity = max(dot(reflection, view_dir), 0);
 intensity = pow(intensity, u_material.shininess);
-vec3 specular = vec3(intensity);
+//vec3 specular = vec3(intensity);
+
+//standard-phong
+
+//reflection = reflect(-light_dir, normal);
+
+//view_dir = normalize(--position);
+
+//intensity = max(dot(reflection, view_dir), 0);
+
+// light_dir = normalize( u_light.position - position);
+ //view_dir  = normalize(u_light.position - position);
+// vec3 halfway_dir = normalize(light_dir + view_dir);
+
+ //float spec = pow(max(dot(v_normal, halfway_dir), 0.0), u_material.shininess);
+//specular = u_light.color * spec;
+
+//blinn phong
+ vec3 view_dir = normalize(-position);
+ vec3 halfway_dir = normalize(light_dir + view_dir);
+ intensity = max(dot(reflection, view_dir), 0);
+ intensity = pow(intensity, u_material.shininess);
+ vec3 specular = vec3(intensity);
+
 
 
 return u_ambient_light + diffuse + specular;
@@ -61,9 +84,7 @@ void main()
 
 	vec3 normal = normalize(mat3(model_view) * a_normal);
 
-
-
-	v_color = calculateLight(position, normal);
+	v_color = calculateLight(position, normal); // why the FUCK are you what draws the color
 	
 	gl_Position = u_projection * u_view * u_model * vec4(a_position, 1.0);
 

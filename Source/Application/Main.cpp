@@ -12,6 +12,10 @@ int main(int argc, char* argv[]) {
 	std::vector<neu::vec3> colors{ { 1, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 }, {1,0,1} };
 	std::vector<neu::vec2> texturecoords{ {0,0}, {0.5f, 1.0f}, {1,1} };
 
+	auto scene = std::make_unique<neu::Scene>();
+	scene->Load("scenes/scene01.json");
+
+
 	struct Vertex {
 		neu::vec3 position;
 		neu::vec3 color;
@@ -36,7 +40,7 @@ int main(int argc, char* argv[]) {
 	vb->SetAttribute(1, 3, sizeof(Vertex), offsetof(Vertex, color));
 	vb->SetAttribute(2, 2, sizeof(Vertex), offsetof(Vertex, texturecoords));
 	
-
+	//model
 	auto model3d = std::make_shared<neu::Model>();
 	model3d->Load("Models/Abe.obj");
 
@@ -108,6 +112,7 @@ int main(int argc, char* argv[]) {
 		float dt = neu::GetEngine().GetTime().GetDeltaTime();
 		if (neu::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 
+		scene->Update(dt);
 		//rotation += dt;
 
 		glm::mat4 model = glm::mat4(1.0f);
@@ -116,11 +121,7 @@ int main(int argc, char* argv[]) {
 		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 		material->program->SetUniform("u_model", model);
 
-		//evilEye.x = neu::GetEngine().GetInput().GetMouseDelta().x;
-		//evilEye.z = neu::GetEngine().GetInput().GetMouseDelta().y;
-
-		//if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_A)) evilEye.x -= 5 * dt;
-		//if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_D)) evilEye.x += 5 * dt;
+		
 
 		float speed = 10.0f;
 		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_A)) camera.position.x -= speed * dt;
@@ -133,9 +134,8 @@ int main(int argc, char* argv[]) {
 		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_E)) camera.position.z -= speed * dt;
 
 
-		//glm::mat4 view = glm::lookAt(evilEye, evilEye + glm::vec3{0,0,-1},glm::vec3{0,1,0});
 		glm::mat4 view = glm::lookAt(camera.position, camera.position + glm::vec3{ 0, 0, -1 }, glm::vec3{ 0, 1, 0 });
-		//program->SetUniform("u_view", view);
+		//material->program->SetUniform("u_view", view);
 		
 		material->program->SetUniform("u_view", view);
 
@@ -184,6 +184,9 @@ int main(int argc, char* argv[]) {
 
 		material->Bind();
 		model3d->Draw(GL_TRIANGLES);
+
+
+		scene->Draw(neu::GetEngine().GetRenderer());
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
