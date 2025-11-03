@@ -38,21 +38,7 @@ int main(int argc, char* argv[]) {
 		
 
 		float speed = 10.0f;
-		/*
-		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_A)) camera.position.x -= speed * dt;
-		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_D)) camera.position.x += speed * dt;
-
-		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_W)) camera.position.y += speed * dt;
-		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_S)) camera.position.y -= speed * dt;
-
-		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_Q)) camera.position.z += speed * dt;
-		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_E)) camera.position.z -= speed * dt;
-
-		*/
-
 		
-
-
 
 		// draw
 		neu::GetEngine().GetRenderer().Clear();

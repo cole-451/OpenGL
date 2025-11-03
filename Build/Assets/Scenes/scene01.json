@@ -111,6 +111,11 @@
 			"components": [
 				{
 					"type": "CameraComponent"
+				},
+				{
+					"type": "FirstPersonController",
+					"speed": 5,
+					"sensitivity": 0.2
 				}
 			]
 		},
