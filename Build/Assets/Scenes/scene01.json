@@ -6,11 +6,11 @@
 			"transform": {
 				"position": [
 					0,
-					0,
+					-50,
 					0
 				],
 				"rotation": [ 0, 0, 0 ],
-				"scale": [ 1, 1, 1 ]
+				"scale": [ 0.5, 0.5, 0.5 ]
 			},
 			"components": [
 				{
@@ -21,10 +21,90 @@
 			]
 		},
 		{
+			"name": "tree",
+			"persistent": true,
+			"transform": {
+				"position": [
+					30,
+					-40,
+					-20
+				],
+				"rotation": [ 0, 0, 0 ],
+				"scale": [ 1, 1, 1 ]
+			},
+			"components": [
+				{
+					"type": "ModelRenderer",
+					"model": "Models/tree.obj",
+					"material": "Materials/tree.mat"
+				}
+			]
+		},
+		{
+			"name": "tree2",
+			"persistent": true,
+			"transform": {
+				"position": [
+					-30,
+					-40,
+					-20
+				],
+				"rotation": [ 0, 0, 40 ],
+				"scale": [ 1, 1, 1 ]
+			},
+			"components": [
+				{
+					"type": "ModelRenderer",
+					"model": "Models/tree.obj",
+					"material": "Materials/tree.mat"
+				}
+			]
+		},
+		{
+			"name": "bush",
+			"persistent": true,
+			"transform": {
+				"position": [
+					-40,
+					-40,
+					10
+				],
+				"rotation": [ 0, 0, 40 ],
+				"scale": [ 0.5, 0.5, 0.5 ]
+			},
+			"components": [
+				{
+					"type": "ModelRenderer",
+					"model": "Models/tree.obj",
+					"material": "Materials/tree.mat"
+				}
+			]
+		},
+		{
+			"name": "bush2",
+			"persistent": true,
+			"transform": {
+				"position": [
+					40,
+					-40,
+					10
+				],
+				"rotation": [ 0, 0, 40 ],
+				"scale": [ 0.5, 0.5, 0.5 ]
+			},
+			"components": [
+				{
+					"type": "ModelRenderer",
+					"model": "Models/tree.obj",
+					"material": "Materials/tree.mat"
+				}
+			]
+		},
+		{
 			"name": "camera",
 			"persistent": true,
 			"transform": {
-				"position": [ 0, 0, 5 ],
+				"position": [ 0, 0, 100 ],
 				"rotation": [ 0, 180, 0 ],
 				"scale": [ 1, 1, 1 ]
 			},
@@ -45,7 +125,7 @@
 			"components": [
 				{
 					"type": "LightComponent",
-					"color": [ 1, 1, 0 ]
+					"color": [ 1, 0, 1 ]
 				}
 			]
 		}
