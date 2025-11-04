@@ -16,6 +16,8 @@ int main(int argc, char* argv[]) {
 	auto scene = std::make_unique<neu::Scene>();
 	scene->Load("scenes/scene01.json");
 
+	auto editor = std::make_unique<neu::Editor>();
+
 
 	
 
@@ -37,22 +39,23 @@ int main(int argc, char* argv[]) {
 		scene->Update(dt);
 		
 
-		float speed = 10.0f;
+		//editor
+		editor->Begin();
+		editor->UpdateGui(*scene);
+
 		
 
 		// draw
 		neu::GetEngine().GetRenderer().Clear();
 		// start new ImGui frame
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplSDL3_NewFrame();
-		ImGui::NewFrame();
+		
 		// set ImGui
 		
-		ImGui::Begin("Editor");
+		//ImGui::Begin("Editor");
 		
 
 		
-		ImGui::End();
+		//ImGui::End();
 
 
 		scene->Draw(neu::GetEngine().GetRenderer());

@@ -1,6 +1,6 @@
 #pragma once
 namespace neu {
-	class FirstPersonController : public Component, public GUI {
+	class FirstPersonController : public Component {
 	public:
 		CLASS_PROTOTYPE(FirstPersonController)
 
@@ -15,5 +15,8 @@ namespace neu {
 		float speed = 3; // movement speed
 		float yaw = 0;
 		float pitch = 0;
+
+		// Inherited via Component
+		const char* GetClassName() override;
 	};
 }

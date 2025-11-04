@@ -21,4 +21,8 @@ namespace neu {
 	{
 		ImGui::ColorEdit3("color", glm::value_ptr(color));
 	}
+	const char* LightComponent::GetClassName()
+	{
+		return nullptr;
+	}
 }

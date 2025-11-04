@@ -3,6 +3,7 @@
 // ============================================================================
 #pragma once
 #include "Core/Serializable.h"
+#include "GUI/GUI.h"
 #include <string>
 
 /// <summary>
@@ -36,7 +37,9 @@
 /// - Use this macro for classes that need prototype/cloning functionality
 /// </summary>
 /// <param name="classname">The name of the derived class implementing Clone()</param>
-#define CLASS_PROTOTYPE(classname) virtual std::unique_ptr<Object> Clone() { return std::make_unique<classname>(*this); }
+#define CLASS_PROTOTYPE(classname) \
+ virtual std::unique_ptr<Object> Clone() { return std::make_unique<classname>(*this); }\
+const char* GetTextName(){return #classname;}
 
 namespace neu {
     /// <summary>
@@ -77,43 +80,12 @@ namespace neu {
     /// }
     /// ```
     /// </summary>
-    class Object : public ISerializable {
+    class Object : public ISerializable, public GUI {
     public:
-        /// <summary>
-        /// Human-readable identifier for the object.
-        /// 
-        /// The name serves multiple purposes:
-        /// - Object identification in debugging and logging
-        /// - Asset referencing in configuration files
-        /// - Scene graph navigation and object lookup
-        /// - User interface display in editors and debug tools
-        /// 
-        /// Naming conventions:
-        /// - Use descriptive names that indicate object purpose
-        /// - Consider hierarchical naming for related objects (e.g., "Player.Weapon.Sword")
-        /// - Avoid special characters that might interfere with file systems or parsing
-        /// 
-        /// Examples: "MainCamera", "PlayerCharacter", "Background_Layer1", "EnemySpawner"
-        /// </summary>
+        
         std::string name;
 
-        /// <summary>
-        /// Boolean flag indicating whether the object is currently active/enabled.
-        /// 
-        /// The active state controls object participation in game systems:
-        /// - Active objects participate in update loops, rendering, and collision detection
-        /// - Inactive objects are typically skipped during processing for performance
-        /// - State can be toggled at runtime for dynamic show/hide functionality
-        /// - Useful for implementing object pooling and temporary disabling
-        /// 
-        /// Default value is true, meaning objects are active upon creation.
-        /// 
-        /// Usage patterns:
-        /// - Temporary object disabling without destruction
-        /// - Implementing visibility toggles and conditional behavior
-        /// - Object pooling systems that reuse inactive objects
-        /// - Pause/unpause functionality for specific objects
-        /// </summary>
+        
         bool active{ true };
 
     public:
@@ -303,6 +275,8 @@ namespace neu {
         /// </summary>
         /// <returns>A unique_ptr to a new Object instance that is a deep copy of this object</returns>
         virtual std::unique_ptr<Object> Clone() = 0;
+
+        virtual const char* GetClassName() = 0;
 
         /// <summary>
         /// Deserializes object state from serialized data.

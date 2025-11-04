@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Vector2.h"
 #include "Core/Serializable.h"
-#include "Renderer/GUI.h"
+#include "GUI/GUI.h"
 #include <glm/glm.hpp>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/euler_angles.hpp>

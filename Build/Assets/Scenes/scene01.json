@@ -115,7 +115,7 @@
 				{
 					"type": "FirstPersonController",
 					"speed": 5,
-					"sensitivity": 0.2
+					"sensitivity": 2.5
 				}
 			]
 		},

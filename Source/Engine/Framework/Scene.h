@@ -4,57 +4,15 @@
 #include <vector>
 #include <list>
 #include <memory>
+#include "GUI/GUI.h"
 
 namespace neu {
     // Forward declaration to avoid circular dependency
     // Scene needs to know about Actor, but full definition not needed in header
     class Actor;
 
-    /// <summary>
-    /// Container and manager for all actors within a game level or area.
-    /// 
-    /// The Scene class serves as the primary container for objects (Actors) and provides
-    /// the main game loop functionality (update, draw) for all contained entities. It extends
-    /// Object to support serialization, enabling level data to be loaded from configuration files.
-    /// 
-    /// Key Responsibilities:
-    /// - Actor lifecycle management (creation, update, destruction)
-    /// - Coordinated updating of all active actors each frame
-    /// - Rendering coordination for all visible actors
-    /// - Factory integration for loading actors from serialized data
-    /// - Prototype registration for efficient actor spawning
-    /// - Query interface for finding specific actors or actor types
-    /// 
-    /// Design Philosophy:
-    /// - Centralized management: Single point of control for all actors in a scene
-    /// - Data-driven loading: Scenes can be completely defined in external files
-    /// - Performance-focused: Efficient iteration and selective processing
-    /// - Type-safe queries: Template-based actor retrieval with compile-time type checking
-    /// - Memory ownership: Clear ownership model using unique_ptr for automatic cleanup
-    /// 
-    /// Common Usage Patterns:
-    /// 1. **Level Loading**: Load entire scenes from JSON configuration files
-    /// 2. **Game Loop Integration**: Update and draw all actors in coordinated fashion
-    /// 3. **Actor Management**: Add/remove actors dynamically during gameplay
-    /// 4. **Object Queries**: Find specific actors for interaction or game logic
-    /// 5. **Prototype Systems**: Register actor templates for efficient spawning
-    /// 
-    /// Example Scene Structure:
-    /// ```json
-    /// {
-    ///     "name": "Level1",
-    ///     "prototypes": [
-    ///         {"name": "EnemyTemplate", "type": "Enemy", ...},
-    ///         {"name": "PickupTemplate", "type": "Pickup", ...}
-    ///     ],
-    ///     "actors": [
-    ///         {"name": "Player", "type": "Player", "position": {"x": 0, "y": 0}},
-    ///         {"name": "Enemy1", "prototype": "EnemyTemplate", ...}
-    ///     ]
-    /// }
-    /// ```
-    /// </summary>
-    class Scene : public ISerializable {
+   
+    class Scene : public ISerializable, public GUI {
     public:
         /// <summary>
         /// Constructs a scene with a reference to the parent game instance.
@@ -172,6 +130,8 @@ namespace neu {
         /// <param name="start">Whether to immediately call Start() on the actor (default: true)</param>
         void AddActor(std::unique_ptr<Actor> actor, bool start = true);
 
+
+        void UpdateGui() override;
         /// <summary>
         /// Removes actors from the scene based on their persistence settings.
         /// 
@@ -282,6 +242,7 @@ namespace neu {
         std::vector<T*> GetActorsByTag(const std::string& tag);
 
     private:
+        friend class Editor;
 
         /// <summary>
         /// Container for all actors in the scene.
@@ -301,6 +262,8 @@ namespace neu {
         /// - Actor removal: O(n) for search, O(1) for removal once found
         /// </summary>
         std::list<std::unique_ptr<Actor>> m_actors;
+        float m_dt{ 0 };
+        glm::vec3 m_ambient_light{ 0.2f, 0.2f, 0.2f };
     };
 
     // ============================================================================

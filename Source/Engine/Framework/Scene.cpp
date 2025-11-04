@@ -118,7 +118,7 @@ namespace neu {
 		}
 		for (auto& program : programs) {
 			program->Use();
-			program->SetUniform("u_ambient_light", glm::vec3{ 0.2f });
+			program->SetUniform("u_ambient_light", m_ambient_light);
 			camera->SetProgram(*program);
 			if (light) light->SetProgram(*program, "u_light", camera->view);
 		}
@@ -171,6 +171,11 @@ namespace neu {
 		// std::move is required to transfer unique_ptr ownership
 		// push_back adds to the end of the list
 		m_actors.push_back(std::move(actor));
+	}
+
+	void Scene::UpdateGui()
+	{
+		ImGui::ColorEdit3("Ambient", glm::value_ptr(m_ambient_light));
 	}
 
 	/// <summary>

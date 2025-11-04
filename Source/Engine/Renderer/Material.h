@@ -1,7 +1,7 @@
 #pragma once
 #include "Resources/Resource.h"
 #include <glm/glm.hpp>
-#include "GUI.h"
+#include "GUI/GUI.h"
 namespace neu {
 	class Program;
 	class Texture;

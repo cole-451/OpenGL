@@ -42,4 +42,8 @@ namespace neu {
 		ImGui::DragFloat("near", &near, 0.1f);
 		ImGui::DragFloat("far", &far, 0.1f);
 	}
+	const char* CameraComponent::GetClassName()
+	{
+		return nullptr;
+	}
 }

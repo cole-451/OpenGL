@@ -134,6 +134,23 @@ namespace neu {
 		}
 	}
 
+	void Actor::UpdateGui()
+	{
+		ImGui::Text("Name: %s", name.c_str());
+		ImGui::Text("Tag: %s", tag.c_str());
+		ImGui::Checkbox("Active", &active);
+		// transform information
+		ImGui::Separator();
+		transform.UpdateGui();
+		for (auto& component : m_components) {
+			ImGui::Separator();
+			if (ImGui::CollapsingHeader(component->GetClassName(), ImGuiTreeNodeFlags_DefaultOpen)) {
+				component->UpdateGui();
+			}
+		}
+
+	}
+
 	/// <summary>
 	/// Adds a component to the actor.
 	/// 
@@ -150,6 +167,11 @@ namespace neu {
 		// Transfer ownership to the actor's component container
 		// std::move is required to transfer unique_ptr ownership
 		m_components.push_back(std::move(component));
+	}
+
+	const char* Actor::GetClassName()
+	{
+		return nullptr;
 	}
 
 	/// <summary>

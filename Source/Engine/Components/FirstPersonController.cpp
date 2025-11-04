@@ -1,6 +1,6 @@
 #include "FirstPersonController.h"
 #include "Engine.h"
-#include "Renderer/GUI.h"
+#include "GUI/GUI.h"
 
 namespace neu {
 	FACTORY_REGISTER(FirstPersonController)
@@ -52,6 +52,11 @@ namespace neu {
 	void FirstPersonController::UpdateGui() {
 		ImGui::DragFloat("Speed", &speed, 0.1f);
 		ImGui::DragFloat("Sensitivity", &sensitivity, 0.1f);
+	}
+
+	const char* FirstPersonController::GetClassName()
+	{
+		return nullptr;
 	}
 
 

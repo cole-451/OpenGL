@@ -28,4 +28,12 @@ namespace neu {
 
 		material = Resources().Get<Material>(matName);
 	}
+	void ModelRenderer::UpdateGui()
+	{
+
+	}
+	const char* ModelRenderer::GetClassName()
+	{
+		return nullptr;
+	}
 }

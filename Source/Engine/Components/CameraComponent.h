@@ -1,7 +1,7 @@
 #pragma once
 
 namespace neu {
-	class CameraComponent : public Component, GUI {
+	class CameraComponent : public Component {
 	public:
 		CLASS_PROTOTYPE(CameraComponent)
 
@@ -23,5 +23,8 @@ namespace neu {
 		float aspect = 0;
 		float near = 0.1f;
 		float far = 100.0f;
+
+		// Inherited via Component
+		const char* GetClassName() override;
 	};
 }
