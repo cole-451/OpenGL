@@ -32,8 +32,4 @@ namespace neu {
 	{
 
 	}
-	const char* ModelRenderer::GetClassName()
-	{
-		return name.c_str();
-	}
 }

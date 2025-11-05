@@ -53,13 +53,4 @@ namespace neu {
 		ImGui::DragFloat("Speed", &speed, 0.1f);
 		ImGui::DragFloat("Sensitivity", &sensitivity, 0.1f);
 	}
-
-	const char* FirstPersonController::GetClassName()
-	{
-		return name.c_str();
-	}
-
-
-
-
 }

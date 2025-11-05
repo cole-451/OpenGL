@@ -23,8 +23,5 @@ namespace neu {
 		float aspect = 0;
 		float near = 0.1f;
 		float far = 100.0f;
-
-		// Inherited via Component
-		const char* GetClassName() override;
 	};
 }

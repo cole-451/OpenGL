@@ -11,7 +11,6 @@ in vec2 texturecoords;
 out vec4 f_color;
 
 uniform struct material{
-//sampler2D texture;
 	sampler2D baseMap;
 	vec3 baseColor;
 
@@ -20,9 +19,7 @@ uniform struct material{
 	vec2 offset;
 }u_material;
 
-//uniform sampler2D u_texture;
-
 void main(){
 	f_color = texture(u_material.baseMap, fs_in.texturecoords) * vec4(fs_in.color, 1);
-	//f_color = vec4(v_color, 1);
+	//f_color = vec4(fs_in.color, 1);
 }

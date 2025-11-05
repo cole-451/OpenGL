@@ -6,11 +6,11 @@
 			"transform": {
 				"position": [
 					0,
-					-50,
+					-2,
 					0
 				],
 				"rotation": [ 0, 0, 0 ],
-				"scale": [ 0.5, 0.5, 0.5 ]
+				"scale": [ 0.02, 0.02, 0.02 ]
 			},
 			"components": [
 				{
@@ -21,91 +21,11 @@
 			]
 		},
 		{
-			"name": "tree",
-			"persistent": true,
-			"transform": {
-				"position": [
-					30,
-					-40,
-					-20
-				],
-				"rotation": [ 0, 0, 0 ],
-				"scale": [ 1, 1, 1 ]
-			},
-			"components": [
-				{
-					"type": "ModelRenderer",
-					"model": "Models/tree.obj",
-					"material": "Materials/tree.mat"
-				}
-			]
-		},
-		{
-			"name": "tree2",
-			"persistent": true,
-			"transform": {
-				"position": [
-					-30,
-					-40,
-					-20
-				],
-				"rotation": [ 0, 0, 40 ],
-				"scale": [ 1, 1, 1 ]
-			},
-			"components": [
-				{
-					"type": "ModelRenderer",
-					"model": "Models/tree.obj",
-					"material": "Materials/tree.mat"
-				}
-			]
-		},
-		{
-			"name": "bush",
-			"persistent": true,
-			"transform": {
-				"position": [
-					-40,
-					-40,
-					10
-				],
-				"rotation": [ 0, 0, 40 ],
-				"scale": [ 0.5, 0.5, 0.5 ]
-			},
-			"components": [
-				{
-					"type": "ModelRenderer",
-					"model": "Models/tree.obj",
-					"material": "Materials/tree.mat"
-				}
-			]
-		},
-		{
-			"name": "bush2",
-			"persistent": true,
-			"transform": {
-				"position": [
-					40,
-					-40,
-					10
-				],
-				"rotation": [ 0, 0, 40 ],
-				"scale": [ 0.5, 0.5, 0.5 ]
-			},
-			"components": [
-				{
-					"type": "ModelRenderer",
-					"model": "Models/tree.obj",
-					"material": "Materials/tree.mat"
-				}
-			]
-		},
-		{
 			"name": "camera",
 			"persistent": true,
 			"transform": {
-				"position": [ 0, 0, 100 ],
-				"rotation": [ 0, 180, 0 ],
+				"position": [ 0, 0, 5 ],
+				"rotation": [ 0, 0, 0 ],
 				"scale": [ 1, 1, 1 ]
 			},
 			"components": [
@@ -123,7 +43,7 @@
 			"name": "light",
 			"persistent": true,
 			"transform": {
-				"position": [ 5, 5, 0 ],
+				"position": [ -5, 5, 0 ],
 				"rotation": [ 0, 0, 0 ],
 				"scale": [ 1, 1, 1 ]
 			},
@@ -131,8 +51,8 @@
 				{
 					"type": "LightComponent",
 					"color": [ 1, 0, 1 ],
-					"intensity": 2.0,
-						"range": 35.0
+					"intensity": 1.0,
+					"range": 35.0
 				}
 			]
 		},
@@ -140,7 +60,7 @@
 			"name": "light",
 			"persistent": true,
 			"transform": {
-				"position": [ 0, 0, 0 ],
+				"position": [ 5, 0, 0 ],
 				"rotation": [ 0, 0, 0 ],
 				"scale": [ 1, 1, 1 ]
 			},
@@ -148,7 +68,24 @@
 				{
 					"type": "LightComponent",
 					"color": [ 0, 0, 1 ],
-					"intensity": 2.0,
+					"intensity": 1.0,
+					"range": 35.0
+				}
+			]
+		},
+		{
+			"name": "light",
+			"persistent": true,
+			"transform": {
+				"position": [ -5, 5, 0 ],
+				"rotation": [ 0, 0, 0 ],
+				"scale": [ 1, 1, 1 ]
+			},
+			"components": [
+				{
+					"type": "LightComponent",
+					"color": [ 0, 1, 0 ],
+					"intensity": 1.0,
 					"range": 35.0
 				}
 			]

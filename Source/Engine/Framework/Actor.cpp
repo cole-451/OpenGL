@@ -169,11 +169,6 @@ namespace neu {
 		m_components.push_back(std::move(component));
 	}
 
-	const char* Actor::GetClassName()
-	{
-		return name.c_str();
-	}
-
 	/// <summary>
 	/// Deserializes actor data from configuration files.
 	/// 

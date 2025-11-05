@@ -157,9 +157,6 @@ namespace neu {
 		// Uses unique_ptr for automatic memory management
 		// Protected to allow derived classes to access components directly
 		std::vector<std::unique_ptr<Component>> m_components;
-
-		// Inherited via Object
-		const char* GetClassName() override;
 };
 
 	/// <summary>

@@ -14,8 +14,5 @@ namespace neu {
 		void Draw(Renderer& renderer) override;
 		void Read(const serial_data_t& value);
 		void UpdateGui() override;
-
-		// Inherited via RendererComponent
-		const char* GetClassName() override;
 	};
 }
