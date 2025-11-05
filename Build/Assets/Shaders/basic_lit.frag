@@ -1,7 +1,12 @@
 #version 460 core
 
-in vec3 v_color;
-in vec2 v_texturecoords;
+
+
+in VS_OUT
+{
+ in vec3 color;
+in vec2 texturecoords;
+}fs_in;
 
 out vec4 f_color;
 
@@ -18,6 +23,6 @@ uniform struct material{
 //uniform sampler2D u_texture;
 
 void main(){
-	f_color = texture(u_material.baseMap, v_texturecoords) * vec4(v_color, 1);
+	f_color = texture(u_material.baseMap, fs_in.texturecoords) * vec4(fs_in.color, 1);
 	//f_color = vec4(v_color, 1);
 }

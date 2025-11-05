@@ -171,7 +171,7 @@ namespace neu {
 
 	const char* Actor::GetClassName()
 	{
-		return nullptr;
+		return name.c_str();
 	}
 
 	/// <summary>

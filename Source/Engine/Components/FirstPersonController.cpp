@@ -56,7 +56,7 @@ namespace neu {
 
 	const char* FirstPersonController::GetClassName()
 	{
-		return nullptr;
+		return name.c_str();
 	}
 
 

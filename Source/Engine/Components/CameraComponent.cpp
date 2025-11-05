@@ -44,6 +44,6 @@ namespace neu {
 	}
 	const char* CameraComponent::GetClassName()
 	{
-		return nullptr;
+		return name.c_str();
 	}
 }

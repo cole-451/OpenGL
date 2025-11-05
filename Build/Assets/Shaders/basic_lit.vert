@@ -1,12 +1,14 @@
 #version 460 core
 
 layout (location = 0) in vec3 a_position;
-layout (location = 1) in vec3 a_color;
-layout (location = 2) in vec2 a_texturecoords;
-layout (location = 3) in vec3 a_normal;
+layout (location = 1) in vec2 a_texturecoords;
+layout (location = 2) in vec3 a_normal;
 
- out vec3 v_color;
-out vec2 v_texturecoords;
+out VS_OUT
+{
+ out vec3 color;
+out vec2 texturecoords;
+}vs_out;
 
 uniform float u_time;
 uniform mat4 u_model;
@@ -16,11 +18,13 @@ uniform mat4 u_projection;
 uniform vec3 u_ambient_light;
 uniform vec3 u_light_pos;
 
-uniform struct light
+ struct Light
 {
 vec3 position;
 vec3 color;
-}u_light;
+float intensity;
+float range;
+};
 
 uniform struct material{
 //sampler2D texture;
@@ -32,12 +36,21 @@ uniform struct material{
 	vec2 offset;
 }u_material;
 
+uniform int u_num_lights = 1;
+uniform Light u_lights[5];
 
-vec3 calculateLight(vec3 position, vec3 normal){
-vec3 light_dir = normalize( u_light.position - position);
+ float calculateAttenuation(in float light_distance, in float range){
+
+ float attenuation = max(0.0 ,(1.0 - (light_distance / range)));
+return attenuation * attenuation;
+}
+
+
+vec3 calculateLight(in Light light, in vec3 position, in vec3 normal){
+vec3 light_dir = normalize( light.position - position);
 float intensity = max(dot(light_dir, normal), 0);
 
-vec3 diffuse = u_light.color * u_material.baseColor * intensity;
+vec3 diffuse = light.color * u_material.baseColor * intensity;
 
 //specular
 vec3 reflection = reflect(-light_dir, normal);
@@ -46,22 +59,28 @@ intensity = max(dot(reflection, view_dir), 0);
 intensity = pow(intensity, u_material.shininess);
 vec3 specular = vec3(intensity);
 
+float light_distance = length(light.position - position);
+float attenuation = calculateAttenuation(light_distance, light.range);
 
-return u_ambient_light + diffuse + specular;
+return (diffuse + specular) * light.intensity * attenuation;
 }
 
 void main()
 {
-	v_texturecoords = a_texturecoords * u_material.tiling + u_material.offset;
+	vs_out.texturecoords = a_texturecoords * u_material.tiling + u_material.offset;
 
 	mat4 model_view = u_view * u_model;
 	vec3 position = vec3(model_view * vec4(a_position, 1));
 
 	vec3 normal = normalize(mat3(model_view) * a_normal);
 
+	vs_out.color = u_ambient_light;
 
+	for(int i = 0; i <u_num_lights; i++){
+	vs_out.color += calculateLight(u_lights[i],position, normal);
 
-	v_color = calculateLight(position, normal);
+	}
+
 	
 	gl_Position = u_projection * u_view * u_model * vec4(a_position, 1.0);
 

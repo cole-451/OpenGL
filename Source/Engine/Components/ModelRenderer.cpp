@@ -34,6 +34,6 @@ namespace neu {
 	}
 	const char* ModelRenderer::GetClassName()
 	{
-		return nullptr;
+		return name.c_str();
 	}
 }
