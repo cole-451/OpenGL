@@ -1,5 +1,5 @@
 {
-	"program": "Shaders/basic_lit.prog",
+	"program": "Shaders/basic_phong.prog",
 	"baseMap": "Textures/Abev1/abe_clothes_BaseColor.png",
 	"baseColor":  [1,1,1],
 	"shininess": 128,

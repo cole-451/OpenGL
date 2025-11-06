@@ -32,6 +32,7 @@ uniform vec3 u_light_pos;
 	float intensity;
 	float range;
 	float outerCutoff;
+	float innerCutoff;
 };
 
 uniform struct material{
@@ -60,22 +61,25 @@ vec3 calculateLight(in Light light, in vec3 position, in vec3 normal){
 	case POINT:
 		light_dir = normalize( light.position - position);
 		light_distance = length(light.position - position);
-		//attenuation = calculateAttenuation(light_distance, light.range);
+		attenuation = calculateAttenuation(light_distance, light.range);
 	break;
 	case DIRECTIONAL:
 	light_dir = light.direction;
+	attenuation = 1.0;
 	break;
 
 	case SPOT:
 		light_dir = normalize(light.position - position);
 		light_distance = length(light.position - position);
 		attenuation = calculateAttenuation(light_distance, light.range);
-		float angle = acos(dot(light_dir, light.direction));
-		if (angle > light.outerCutoff) attenuation = 0;
+		float angle = dot(light_dir, normalize(light.direction));
+	float spotAttenuation = smoothstep(light.outerCutoff + 0.001, light.innerCutoff, angle);
 	break;
 	}
 
-	light_dir = normalize( light.position - position);
+	//light_dir = normalize( light.position - position);
+
+	//diffuse
 	float intensity = max(dot(light_dir, normal), 0);
 
 	vec3 diffuse = light.color * u_material.baseColor * intensity;
@@ -86,6 +90,13 @@ vec3 calculateLight(in Light light, in vec3 position, in vec3 normal){
 	intensity = max(dot(reflection, view_dir), 0);
 	intensity = pow(intensity, u_material.shininess);
 	vec3 specular = vec3(intensity);
+
+	//blinn-phong
+	vec3 halfway_dir = normalize(light_dir + view_dir);
+	float NdotH = max(dot(normal, halfway_dir), 0);
+	NdotH = pow(NdotH, u_material.shininess);
+	specular = vec3(NdotH);
+
 
 	//float light_distance = length(light.position - position);
 	//float attenuation = calculateAttenuation(light_distance, light.range);

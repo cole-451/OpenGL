@@ -17,6 +17,7 @@ namespace neu {
 		program.SetUniform(name + ".range", range);
 		program.SetUniform(name + ".type", (int)lightType);
 		program.SetUniform(name + ".outerCutoff", glm::radians(outerCutoff));
+		program.SetUniform(name + ".innerCutoff", glm::radians(innerCutoff));
 		program.SetUniform(name + ".direction", direction);
 		
 
@@ -26,12 +27,13 @@ namespace neu {
 		std::string type;
 		SERIAL_READ(value, type);
 		if (equalsIgnoreCase(type, "point")) lightType = LightType::Point;
-		if (equalsIgnoreCase(type, "directional")) lightType = LightType::Point;
-		if (equalsIgnoreCase(type, "spot")) lightType = LightType::Point;
+		if (equalsIgnoreCase(type, "directional")) lightType = LightType::Directional;
+		if (equalsIgnoreCase(type, "spot")) lightType = LightType::Spot;
 		SERIAL_READ(value, color);
 		SERIAL_READ(value, intensity);
 		SERIAL_READ(value, range);
 		SERIAL_READ(value, outerCutoff);
+		SERIAL_READ(value, innerCutoff);
 
 	}
 	void LightComponent::UpdateGui()
@@ -46,6 +48,7 @@ namespace neu {
 		}
 		
 		ImGui::DragFloat("OuterCutoff", &outerCutoff, 0.1f, 0.0f);
+		ImGui::DragFloat("InnerCutoff", &innerCutoff, 0.1f, 0.0f);
 
 		//set inner and outer cutoff???
 	}

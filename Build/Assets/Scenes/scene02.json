@@ -52,7 +52,9 @@
 					"type": "LightComponent",
 					"color": [ 1, 0, 1 ],
 					"intensity": 1.0,
-					"range": 35.0
+					"range": 35.0,
+					"lightType": "point"
+
 				}
 			]
 		},
@@ -69,7 +71,8 @@
 					"type": "LightComponent",
 					"color": [ 0, 0, 1 ],
 					"intensity": 1.0,
-					"range": 35.0
+					"range": 35.0,
+					"lightType": "directional"
 				}
 			]
 		},
@@ -86,7 +89,8 @@
 					"type": "LightComponent",
 					"color": [ 0, 1, 0 ],
 					"intensity": 1.0,
-					"range": 35.0
+					"range": 35.0,
+					"lightType": "spot"
 				}
 			]
 		}
