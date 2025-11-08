@@ -39,7 +39,9 @@ namespace neu {
 	void LightComponent::UpdateGui()
 	{
 		const char* types[] = { "Point", "Directional", "Spot" };
-		//ImGui::Combo("Type", &lightType, types, 3);
+
+		ImGui::Combo("Type", (int*)&lightType, types, 3);
+
 		ImGui::ColorEdit3("color", glm::value_ptr(color));
 		ImGui::DragFloat("intensity", &intensity, 0.1f, 0.0f);
 		
