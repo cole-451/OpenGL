@@ -35,7 +35,6 @@ int main(int argc, char* argv[]) {
 		neu::GetEngine().Update();
 		float dt = neu::GetEngine().GetTime().GetDeltaTime();
 		if (neu::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
-
 		scene->Update(dt);
 		
 
@@ -47,17 +46,6 @@ int main(int argc, char* argv[]) {
 
 		// draw
 		neu::GetEngine().GetRenderer().Clear();
-		// start new ImGui frame
-		
-		// set ImGui
-		
-		//ImGui::Begin("Editor");
-		
-
-		
-		//ImGui::End();
-
-
 		scene->Draw(neu::GetEngine().GetRenderer());
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
