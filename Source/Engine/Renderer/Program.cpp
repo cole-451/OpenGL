@@ -113,7 +113,7 @@ void neu::Program::SetUniform(const std::string& name, unsigned int value)
 void neu::Program::SetUniform(const std::string& name, bool value)
 {
 	GLint location = GetUniformLocation(name);
-	if (location != -1) glUniform1i(location, value);
+	if (location != -1) glUniform1ui(location, value);
 }
 
 void neu::Program::SetUniform(const std::string& name, const glm::vec2& value)

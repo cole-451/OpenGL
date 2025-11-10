@@ -44,13 +44,12 @@ uniform int u_num_lights = 1;
 uniform Light u_lights[5];
 
 uniform struct material{
-//sampler2D texture;
-	sampler2D baseMap;
 	vec3 baseColor;
-
+	vec3 emissiveColor;
 	float shininess;
 	vec2 tiling;
 	vec2 offset;
+	uint parameters;
 }u_material;
 
 float calculateAttenuation(in float light_distance, in float range){
@@ -84,14 +83,12 @@ float attenuation = 1.0;
 	break;
 	}
 
- //light_dir = normalize( u_light.position - position);
 float intensity = max(dot(light_dir, normal), 0);
 
 vec3 diffuse = light.color * u_material.baseColor * intensity;
 
 //specular
 vec3 reflection = reflect(-light_dir, normal);
-//intensity = pow(intensity, u_material.shininess);
 
 
 //blinn phong

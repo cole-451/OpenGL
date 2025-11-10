@@ -1,139 +1,139 @@
 {
-	"actors": [
-		{
-			"name": "abe",
-			"persistent": true,
-			"transform": {
-				"position": [
-					0,
-					-50,
-					0
-				],
-				"rotation": [ 0, 0, 0 ],
-				"scale": [ 0.5, 0.5, 0.5 ]
-			},
-			"components": [
-				{
-					"type": "ModelRenderer",
-					"model": "Models/abe.obj",
-					"material": "Materials/abe1.mat"
-				}
-			]
-		},
-		{
-			"name": "tree",
-			"persistent": true,
-			"transform": {
-				"position": [
-					30,
-					-40,
-					-20
-				],
-				"rotation": [ 0, 0, 0 ],
-				"scale": [ 1, 1, 1 ]
-			},
-			"components": [
-				{
-					"type": "ModelRenderer",
-					"model": "Models/tree.obj",
-					"material": "Materials/tree.mat"
-				}
-			]
-		},
-		{
-			"name": "tree2",
-			"persistent": true,
-			"transform": {
-				"position": [
-					-30,
-					-40,
-					-20
-				],
-				"rotation": [ 0, 0, 40 ],
-				"scale": [ 1, 1, 1 ]
-			},
-			"components": [
-				{
-					"type": "ModelRenderer",
-					"model": "Models/tree.obj",
-					"material": "Materials/tree.mat"
-				}
-			]
-		},
-		{
-			"name": "bush",
-			"persistent": true,
-			"transform": {
-				"position": [
-					-40,
-					-40,
-					10
-				],
-				"rotation": [ 0, 0, 40 ],
-				"scale": [ 0.5, 0.5, 0.5 ]
-			},
-			"components": [
-				{
-					"type": "ModelRenderer",
-					"model": "Models/tree.obj",
-					"material": "Materials/tree.mat"
-				}
-			]
-		},
-		{
-			"name": "bush2",
-			"persistent": true,
-			"transform": {
-				"position": [
-					40,
-					-40,
-					10
-				],
-				"rotation": [ 0, 0, 40 ],
-				"scale": [ 0.5, 0.5, 0.5 ]
-			},
-			"components": [
-				{
-					"type": "ModelRenderer",
-					"model": "Models/tree.obj",
-					"material": "Materials/tree.mat"
-				}
-			]
-		},
-		{
-			"name": "camera",
-			"persistent": true,
-			"transform": {
-				"position": [ 0, 0, 100 ],
-				"rotation": [ 0, 180, 0 ],
-				"scale": [ 1, 1, 1 ]
-			},
-			"components": [
-				{
-					"type": "CameraComponent"
-				},
-				{
-					"type": "FirstPersonController",
-					"speed": 5,
-					"sensitivity": 2.5
-				}
-			]
-		},
-		{
-			"name": "light",
-			"persistent": true,
-			"transform": {
-				"position": [ 5, 5, 0 ],
-				"rotation": [ 0, 0, 0 ],
-				"scale": [ 1, 1, 1 ]
-			},
-			"components": [
-				{
-					"type": "LightComponent",
-					"color": [ 1, 0, 1 ]
-				}
-			]
-		}
-	]
+  "actors": [
+    {
+      "name": "abe",
+      "persistent": true,
+      "transform": {
+        "position": [
+          0,
+          -2,
+          0
+        ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 0.02, 0.02, 0.02 ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "Models/abe.obj",
+          "material": "Materials/abe1.mat"
+        }
+      ]
+    },
+    {
+      "name": "camera",
+      "persistent": true,
+      "transform": {
+        "position": [ 0, 0, 5 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "CameraComponent"
+        },
+        {
+          "type": "FirstPersonController",
+          "speed": 5,
+          "sensitivity": 2.5
+        }
+      ]
+    },
+    {
+      "name": "light",
+      "persistent": true,
+      "transform": {
+        "position": [ -5, 5, 0 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "LightComponent",
+          "color": [ 1, 0, 1 ],
+          "intensity": 1.0,
+          "range": 35.0,
+          "lightType": "point"
+
+        }
+      ]
+    },
+    {
+      "name": "light",
+      "persistent": true,
+      "transform": {
+        "position": [ 5, 0, 0 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "LightComponent",
+          "color": [ 0, 0, 1 ],
+          "intensity": 1.0,
+          "range": 35.0,
+          "lightType": "directional"
+        }
+      ]
+    },
+    {
+      "name": "light",
+      "persistent": true,
+      "transform": {
+        "position": [ -5, 5, 0 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "LightComponent",
+          "color": [ 0, 1, 0 ],
+          "intensity": 1.0,
+          "range": 35.0,
+          "lightType": "spot"
+        }
+      ]
+    },
+    {
+      "name": "plane",
+      "persistent": true,
+      "transform": {
+        "position": [
+          0,
+          -2,
+          0
+        ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "Models/plane.obj",
+          "material": "Materials/tree.mat"
+        }
+      ]
+    },
+    {
+      "name": "crate",
+      "persistent": true,
+      "transform": {
+        "position": [
+          4,
+          3,
+          0
+        ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "Models/cube.obj",
+          "material": "Materials/tree.mat"
+        }
+      ]
+    }
+  ]
 
 }

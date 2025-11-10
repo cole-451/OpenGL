@@ -50,47 +50,11 @@
 			"components": [
 				{
 					"type": "LightComponent",
-					"color": [ 1, 0, 1 ],
+					"color": [ 1, 1, 1 ],
 					"intensity": 1.0,
 					"range": 35.0,
 					"lightType": "point"
 
-				}
-			]
-		},
-		{
-			"name": "light",
-			"persistent": true,
-			"transform": {
-				"position": [ 5, 0, 0 ],
-				"rotation": [ 0, 0, 0 ],
-				"scale": [ 1, 1, 1 ]
-			},
-			"components": [
-				{
-					"type": "LightComponent",
-					"color": [ 0, 0, 1 ],
-					"intensity": 1.0,
-					"range": 35.0,
-					"lightType": "directional"
-				}
-			]
-		},
-		{
-			"name": "light",
-			"persistent": true,
-			"transform": {
-				"position": [ -5, 5, 0 ],
-				"rotation": [ 0, 0, 0 ],
-				"scale": [ 1, 1, 1 ]
-			},
-			"components": [
-				{
-					"type": "LightComponent",
-					"color": [ 0, 1, 0 ],
-					"intensity": 1.0,
-					"range": 35.0,
-					"lightType": "spot"
 				}
 			]
 		},
@@ -130,7 +94,7 @@
 				{
 					"type": "ModelRenderer",
 					"model": "Models/cube.obj",
-					"material": "Materials/tree.mat"
+					"material": "Materials/crate.mat"
 				}
 			]
 		}

@@ -204,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Build\Assets\Materials\abe1.mat" />
+    <None Include="..\..\Build\Assets\Materials\crate.mat" />
     <None Include="..\..\Build\Assets\Materials\tree.mat" />
     <None Include="..\..\Build\Assets\Meshes\enemy.msh" />
     <None Include="..\..\Build\Assets\Platformer\Scenes\level.json" />
