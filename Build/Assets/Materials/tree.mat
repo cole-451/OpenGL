@@ -1,5 +1,5 @@
 {
-	"program": "Shaders/basic_lit.prog",
+	"program": "Shaders/lit_vertex.prog",
 	"baseMap": "Textures/beast.png",
 	"baseColor":  [1,0,1],
 	"shininess": 128,
