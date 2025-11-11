@@ -76,7 +76,7 @@
 				{
 					"type": "ModelRenderer",
 					"model": "Models/plane.obj",
-					"material": "Materials/tree.mat"
+					"material": "Materials/rocks.mat"
 				}
 			]
 		},
