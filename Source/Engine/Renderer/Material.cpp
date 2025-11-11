@@ -20,16 +20,20 @@ namespace neu {
 		SERIAL_READ_NAME(document, "baseMap", textureName);
 		if (!textureName.empty()) baseMap = Resources().Get<Texture>(textureName);
 
-
 		//specular map texture
 		textureName = "";
 		SERIAL_READ_NAME(document, "specularMap", textureName);
-		if(!textureName.empty()) specularMap = Resources().Get<Texture>(textureName);
+		if (!textureName.empty()) specularMap = Resources().Get<Texture>(textureName);
 
 		//emissive map texture
 		textureName = "";
 		SERIAL_READ_NAME(document, "emissiveMap", textureName);
 		if (!textureName.empty()) emissiveMap = Resources().Get<Texture>(textureName);
+
+		//normal map texture
+		textureName = "";
+		SERIAL_READ_NAME(document, "normalMap", textureName);
+		if (!textureName.empty()) normalMap = Resources().Get<Texture>(textureName);
 
 
 		SERIAL_READ(document, baseColor);
@@ -48,23 +52,30 @@ namespace neu {
 
 		program->Use();
 		if (baseMap) {
-		baseMap->SetActive(GL_TEXTURE0);
-		baseMap->Bind();
-		program->SetUniform("u_baseMap", 0);
-		parameters = (Parameters)((uint32_t)parameters | (uint32_t) Parameters::BaseMap);
+			baseMap->SetActive(GL_TEXTURE0);
+			baseMap->Bind();
+			program->SetUniform("u_baseMap", 0);
+			parameters = (Parameters)((uint32_t)parameters | (uint32_t)Parameters::BaseMap);
 		}
 		if (specularMap) {
-		specularMap->SetActive(GL_TEXTURE1);
-		specularMap->Bind();
-		program->SetUniform("u_specularMap", 1);
-		parameters = (Parameters)((uint32_t)parameters | (uint32_t)Parameters::SpecularMap);
+			specularMap->SetActive(GL_TEXTURE1);
+			specularMap->Bind();
+			program->SetUniform("u_specularMap", 1);
+			parameters = (Parameters)((uint32_t)parameters | (uint32_t)Parameters::SpecularMap);
 
 		}
 		if (emissiveMap) {
-		emissiveMap->SetActive(GL_TEXTURE2);
-		emissiveMap->Bind();
-		program->SetUniform("u_emissiveMap", 2);
-		parameters = (Parameters)((uint32_t)parameters | (uint32_t)Parameters::EmissiveMap);
+			emissiveMap->SetActive(GL_TEXTURE2);
+			emissiveMap->Bind();
+			program->SetUniform("u_emissiveMap", 2);
+			parameters = (Parameters)((uint32_t)parameters | (uint32_t)Parameters::EmissiveMap);
+
+		}
+		if (normalMap) {
+			normalMap->SetActive(GL_TEXTURE3);
+			normalMap->Bind();
+			program->SetUniform("u_normalMap", 3);
+			parameters = (Parameters)((uint32_t)parameters | (uint32_t)Parameters::NormalMap);
 
 		}
 
@@ -82,13 +93,16 @@ namespace neu {
 			ImGui::Text("Name: %s", name.c_str());
 			ImGui::Text("Shader: %s", program->name.c_str());
 			if (baseMap) ImGui::Text("Base Map: %s", baseMap->name.c_str());
-		ImGui::ColorEdit3("Base Color", glm::value_ptr(baseColor));
-		if (specularMap) ImGui::Text("Specular Map: %s", specularMap->name.c_str());
-		if (emissiveMap) ImGui::Text("Emissive Map: %s", emissiveMap->name.c_str());
-		ImGui::ColorEdit3("Emissive Color", glm::value_ptr(emissiveColor));
-		ImGui::DragFloat("shininess", &shininess, 1.0f);
-		ImGui::DragFloat2("tiling", glm::value_ptr(tiling), 0.1f);
-		ImGui::DragFloat2("offset", glm::value_ptr(offset), 0.1f);
+			ImGui::ColorEdit3("Base Color", glm::value_ptr(baseColor));
+			if (specularMap) ImGui::Text("Specular Map: %s", specularMap->name.c_str());
+			if (emissiveMap) ImGui::Text("Emissive Map: %s", emissiveMap->name.c_str());
+
+			if (normalMap) ImGui::Text("Normal Map: %s", normalMap->name.c_str());
+
+			ImGui::ColorEdit3("Emissive Color", glm::value_ptr(emissiveColor));
+			ImGui::DragFloat("shininess", &shininess, 1.0f);
+			ImGui::DragFloat2("tiling", glm::value_ptr(tiling), 0.1f);
+			ImGui::DragFloat2("offset", glm::value_ptr(offset), 0.1f);
 
 		}
 	}
