@@ -39,6 +39,8 @@ namespace neu {
 		glm::vec2 tiling{ 1,1 };
 		glm::vec2 offset{ 0,0 };
 
+		float ior = 1.3f;
+
 		Parameters parameters = Parameters::None;
 
 	};
