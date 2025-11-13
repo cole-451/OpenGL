@@ -39,11 +39,11 @@
 				{
 					"type": "ModelRenderer",
 					"model": "Models/abe.obj",
-					"material": "Materials/reflection.mat"
+					"material": "Materials/refraction.mat"
 				},
 				{
 					"type": "RotationComponent",
-					"rotate": [0,90,0]
+					"rotate": [0,0,0]
 				}
 			]
 		},

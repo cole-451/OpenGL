@@ -17,7 +17,9 @@ void main()
 	vec3 position = vec3(u_model * vec4(a_position, 1));
 	vec3 normal = normalize(mat3(u_model) * a_normal);
 
+	//transform view position to world space
 	vec3 viewPosition = inverse(u_view)[3].xyz;
+	//get the direction of the view.
 	vec3 viewDir = normalize(position - viewPosition);
 
 	//viewdir is reflected ABOUT the normal.
