@@ -205,6 +205,8 @@
   <ItemGroup>
     <None Include="..\..\Build\Assets\Materials\abe1.mat" />
     <None Include="..\..\Build\Assets\Materials\crate.mat" />
+    <None Include="..\..\Build\Assets\Materials\reflection.mat" />
+    <None Include="..\..\Build\Assets\Materials\refraction.mat" />
     <None Include="..\..\Build\Assets\Materials\rocks.mat" />
     <None Include="..\..\Build\Assets\Materials\skybox.mat" />
     <None Include="..\..\Build\Assets\Materials\tree.mat" />
@@ -224,7 +226,11 @@
     <None Include="..\..\Build\Assets\Shaders\lit_phong.frag" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong.prog" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong.vert" />
-    <None Include="..\..\Build\Assets\Shaders\skybox.frag" />
+    <None Include="..\..\Build\Assets\Shaders\cubemap.frag" />
+    <None Include="..\..\Build\Assets\Shaders\reflection.prog" />
+    <None Include="..\..\Build\Assets\Shaders\reflection.vert" />
+    <None Include="..\..\Build\Assets\Shaders\refraction.prog" />
+    <None Include="..\..\Build\Assets\Shaders\refraction.vert" />
     <None Include="..\..\Build\Assets\Shaders\skybox.prog" />
     <None Include="..\..\Build\Assets\Shaders\skybox.vert" />
   </ItemGroup>

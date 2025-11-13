@@ -39,7 +39,7 @@
 				{
 					"type": "ModelRenderer",
 					"model": "Models/abe.obj",
-					"material": "Materials/abe1.mat"
+					"material": "Materials/reflection.mat"
 				}
 			]
 		},
