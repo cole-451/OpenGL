@@ -24,6 +24,10 @@ namespace neu {
 		/// <returns>True if the animation was successfully loaded; otherwise, false</returns>
 		bool Load(const std::string& filename, class Renderer& renderer);
 
+
+		void UpdateGui() override {}
+
+
 		/// <summary>
 		/// Gets the size of a single animation frame in pixels.
 		/// Calculated by dividing the texture size by the number of columns and rows.

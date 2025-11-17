@@ -27,6 +27,9 @@ namespace neu {
 		/// <returns>True if the texture was successfully loaded; otherwise, false</returns>
 		bool Load(const std::string& filename);
 
+		void UpdateGui() override;
+
+
 		void SetActive(GLuint unit) { glActiveTexture(unit); }
 		void Bind() { glBindTexture(m_target, m_texture); }
 

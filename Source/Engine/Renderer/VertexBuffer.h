@@ -14,6 +14,8 @@ namespace neu
 		void Draw(GLenum primitiveType = GL_TRIANGLES);
 		void Bind() { glBindVertexArray(m_vao); }
 
+		void UpdateGui() override {}
+
 		void CreateVertexBuffer(GLsizei size, GLsizei count, GLvoid* data);
 		void CreateIndexBuffer(GLenum indexType, GLsizei count, GLvoid* data);
 
@@ -31,5 +33,8 @@ namespace neu
 		GLuint m_ibo = 0;   // index buffer object
 		GLuint m_indexCount = 0; // number of indices index buffer
 		GLenum m_indexType = 0;  // data type of index
+
+
+
 	};
 }

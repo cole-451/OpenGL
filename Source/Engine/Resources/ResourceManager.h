@@ -65,6 +65,10 @@ namespace neu {
             requires std::derived_from<T, Resource>
         res_t<T> GetWithID(const std::string& id, const std::string& name, Args&& ... args);
 
+        template<typename T = Resource>
+            requires std::derived_from<T,Resource>
+        std::vector<T*> GetByType();
+
     private:
         /// <summary>
         /// Friend declaration to allow Singleton base class access to private constructor
@@ -86,6 +90,7 @@ namespace neu {
         /// Resources are stored as base Resource pointers and dynamically cast to specific
         /// types when retrieved, allowing heterogeneous storage in a single container.
         /// </summary>
+       
         std::map<std::string, res_t<Resource>> m_resources;
     };
 
@@ -144,12 +149,22 @@ namespace neu {
         return resource;
     }
 
-    /// <summary>
-    /// Global convenience function for accessing the ResourceManager singleton.
-    /// Provides a shorter, more convenient syntax for resource operations.
-    /// 
-    /// Usage: Resources().Get&lt;Texture&gt;("player.png") instead of ResourceManager::Instance().Get&lt;Texture&gt;("player.png")
-    /// </summary>
-    /// <returns>Reference to the ResourceManager singleton instance</returns>
+
+    template<typename T>
+        requires std::derived_from<T, Resource>
+    inline std::vector<T*> ResourceManager::GetByType()
+    {
+        std::vector<T*> results;
+
+        for (auto resource : m_resources) {
+            auto result = dynamic_cast<T*>(resource.second.get());
+            if (result) {
+                results.push_back(result);
+            }
+        }
+        return results;
+    }
     inline ResourceManager& Resources() { return ResourceManager::Instance(); }
+
+
 }
