@@ -35,7 +35,7 @@ namespace neu {
 				resource = Resources().Get<T>(filename);
 			}
 			else {
-				resource = res_t<T>();
+				//resource = res_t<T>();
 			}
 
 			ImGuiFileDialog::Instance()->Close();
