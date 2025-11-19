@@ -78,28 +78,13 @@ namespace neu {
 	/// </summary>
 	/// <param name="renderer">The renderer used to draw the actors.</param>
 	void Scene::Draw(Renderer& renderer) {
-		std::vector<LightComponent*> lights;
-		for (auto& actor : m_actors) {
-			if (!actor->active) {
-				continue;
-			}
-			auto light = actor->GetComponent<LightComponent>();
-			if (light && light->active) {
-				lights.push_back(light);
-			}
-		}
+		auto lights = GetActorComponents<LightComponent>();
 
-		CameraComponent* camera = nullptr;
-		for (auto& actor : m_actors) {
-			if (!actor->active) {
-				continue;
-			}
-			camera = actor->GetComponent<CameraComponent>();
-			if (camera && camera->active) {
-				break;
-			}
-		}
-		if (!camera) {
+		//get camera
+
+		auto cameras = GetActorComponents<CameraComponent>();
+		
+		if (cameras.empty()) {
 			LOG_WARNING("where the FUCK is the camera???");
 			return;
 		}
@@ -117,7 +102,10 @@ namespace neu {
 		}
 		std::vector<Program*> programs(programSet.begin(), programSet.end());
 
+		for (auto camera : cameras) {
+
 		DrawPass(renderer, programs, lights, camera);
+		}
 
 	}
 

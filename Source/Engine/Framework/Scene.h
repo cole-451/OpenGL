@@ -243,6 +243,10 @@ namespace neu {
             requires std::derived_from<T, Actor>
         std::vector<T*> GetActorsByTag(const std::string& tag);
 
+        template<typename T>
+        requires std::derived_from<T, Component>
+        std::vector<T*>GetActorComponents();
+
     private:
         friend class Editor;
 
@@ -377,5 +381,21 @@ namespace neu {
 
         // Return vector of all actors with matching tag and type
         return results;
+    }
+    template<typename T>
+        requires std::derived_from<T, Component>
+    inline std::vector<T*> Scene::GetActorComponents()
+    {
+        std::vector<T*> components;
+        for (auto& actor : m_actors) {
+            if (!actor->active) {
+                continue;
+            }
+            auto component = actor->GetComponent<T>();
+            if (component && component->active) {
+                components.push_back(component);
+            }
+        }
+        return components;
     }
 }
