@@ -110,6 +110,8 @@ namespace neu {
         /// <param name="renderer">Renderer instance used for all drawing operations</param>
         void Draw(class Renderer& renderer);
 
+        void DrawPass(class Renderer& renderer, std::vector<class Program*>& programs, std::vector<class LightComponent*>& lights, class CameraComponent* camera);
+
         /// <summary>
         /// Adds an actor to the scene with optional immediate initialization.
         /// 

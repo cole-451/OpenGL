@@ -105,17 +105,24 @@ namespace neu {
 		}
 
 		//get programs
-		std::set<Program*> programs;
+		std::set<Program*> programSet;
 		for (auto& actor : m_actors) {
 			auto model = actor->GetComponent<ModelRenderer>();
 			if (!model || !model->active) { //make this so any actor that doesnt have a model doesnt go here.
 				continue;
 			}
 			if (model->material && model->material->program) {
-				programs.insert(model->material->program.get());
+				programSet.insert(model->material->program.get());
 			}
-
 		}
+		std::vector<Program*> programs(programSet.begin(), programSet.end());
+
+		DrawPass(renderer, programs, lights, camera);
+
+	}
+
+	void Scene::DrawPass(Renderer& renderer, std::vector<Program*>& programs, std::vector<LightComponent*>& lights, CameraComponent* camera)
+	{
 		for (auto& program : programs) {
 			program->Use();
 			program->SetUniform("u_ambient_light", m_ambient_light);
@@ -126,20 +133,17 @@ namespace neu {
 				std::string lightName = "u_lights[" + std::to_string(i) + "]";
 				lights[i]->SetProgram(*program, lightName, camera->view);
 			}
-			
+
 		}
 
 
 		// Iterate through all actors in the scene
 		for (auto& actor : m_actors) {
-			// Only render actors that are marked as active
-			// This parallels the Update() logic for consistency
 			if (actor->active) {
-				// Pass the renderer to each actor
-				// Each actor is responsible for its own drawing implementation
 				actor->Draw(renderer);
 			}
 		}
+
 	}
 
 	/// <summary>
