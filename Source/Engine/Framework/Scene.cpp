@@ -103,8 +103,18 @@ namespace neu {
 		std::vector<Program*> programs(programSet.begin(), programSet.end());
 
 		for (auto camera : cameras) {
+			if (camera->outputTexture) {
+				camera->outputTexture->BindFramebuffer();
+				glViewport(0, 0, camera->outputTexture->m_size.x, camera->outputTexture->m_size.y);
+			}
+			camera->Clear();
+
 
 		DrawPass(renderer, programs, lights, camera);
+		if (camera->outputTexture) {
+			camera->outputTexture->UnbindFramebuffer();
+			glViewport(0, 0, renderer.GetWidth(), renderer.GetHeight());
+		}
 		}
 
 	}
