@@ -206,6 +206,7 @@
     <None Include="..\..\Build\Assets\Materials\abe1.mat" />
     <None Include="..\..\Build\Assets\Materials\crate.mat" />
     <None Include="..\..\Build\Assets\Materials\ogre.mat" />
+    <None Include="..\..\Build\Assets\Materials\postprocess.mat" />
     <None Include="..\..\Build\Assets\Materials\reflection.mat" />
     <None Include="..\..\Build\Assets\Materials\refraction.mat" />
     <None Include="..\..\Build\Assets\Materials\rocks.mat" />
@@ -230,6 +231,9 @@
     <None Include="..\..\Build\Assets\Shaders\lit_phong.prog" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong.vert" />
     <None Include="..\..\Build\Assets\Shaders\cubemap.frag" />
+    <None Include="..\..\Build\Assets\Shaders\postprocess.frag" />
+    <None Include="..\..\Build\Assets\Shaders\postprocess.prog" />
+    <None Include="..\..\Build\Assets\Shaders\postprocess.vert" />
     <None Include="..\..\Build\Assets\Shaders\reflection.prog" />
     <None Include="..\..\Build\Assets\Shaders\reflection.vert" />
     <None Include="..\..\Build\Assets\Shaders\refraction.prog" />

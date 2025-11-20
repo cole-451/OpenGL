@@ -10,13 +10,16 @@ int main(int argc, char* argv[]) {
 	SDL_Event e;
 	bool quit = false;
 
+	//create render textures.
 	auto renderTexture = std::make_shared<neu::RenderTexture>();
 	renderTexture->Create(512, 512);
 	neu::Resources().AddResource("renderTexture", renderTexture);
 
-	
+	renderTexture = std::make_shared<neu::RenderTexture>();
+	renderTexture->Create(1024, 1024);
+	neu::Resources().AddResource("postprocessTexture", renderTexture);
 
-	//load scene
+	//create and load scene
 	auto scene = std::make_unique<neu::Scene>();
 	scene->Load("scenes/scene02.json");
 
@@ -49,7 +52,7 @@ int main(int argc, char* argv[]) {
 		
 
 		// draw
-		neu::GetEngine().GetRenderer().Clear();
+
 		scene->Draw(neu::GetEngine().GetRenderer());
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

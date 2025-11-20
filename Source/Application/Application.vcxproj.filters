@@ -149,6 +149,18 @@
     <None Include="..\..\Build\Assets\Shaders\unlit.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="..\..\Build\Assets\Shaders\postprocess.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\postprocess.prog">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\postprocess.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\postprocess.mat">
+      <Filter>Assets\Materials</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\Build\Assets\Textures\beast.png">
