@@ -15,7 +15,7 @@ out vec4 f_color;
 uniform uint u_parameters = 0;
 uniform float u_time = 0;
 uniform float u_intensity = 1.0;
-uniform vec3 u_colorTint = vec3(1, 1, 1);
+uniform vec3 u_colorTint = vec3(0, 1, 0);
 uniform float u_blend = 0;  // blend between original and postprocess color
 
 uniform sampler2D u_baseMap;
@@ -41,7 +41,7 @@ void main()
 	//<multiply postprocess with u_colorTint>
 	if ((u_parameters & SCANLINE) != 0u)	postprocess = (int(gl_FragCoord.y) % 3 != 0) ? vec4(0, 0, 0, 1) : postprocess;
 	if ((u_parameters & GRAIN) != 0u)		postprocess = postprocess * random(gl_FragCoord.xy + u_time);
-	if ((u_parameters & INVERT) != 0u)		postprocess = vec4(-color.r, -color.g, -color.b, 1);
+	if ((u_parameters & INVERT) != 0u)		postprocess = vec4(1-color.r, 1-color.g, 1-color.b, 1);
 	//<invert color>
 
 	if ((u_parameters & VIGNETTE) != 0u){
