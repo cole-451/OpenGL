@@ -3,9 +3,9 @@
 #define GRAYSCALE	(1 << 0)
 #define COLORTINT	(1 << 1)
 #define SCANLINE	(1 <<2)
-#define GRAIN	(1 <<3)
-#define INVERT	(1 <<4)
-#define VIGNETTE	(1 <<5) // look up how to do vignette shit
+#define GRAIN		(1 <<3)
+#define INVERT		(1 <<4)
+#define VIGNETTE	(1 <<5) 
 
 in vec2 v_texcoord;
 
@@ -46,7 +46,7 @@ void main()
 
 	if ((u_parameters & VIGNETTE) != 0u){
 	//calculate distance, and darken pixels the further they are away from the screen
-	vec2 centered = v_texcoord -0.5;
+	vec2 centered = v_texcoord -0.5; //get the center of the screen
 	centered.x *= u_resolution.x / u_resolution.y; // this adjusts this to the aspect ratio
 	float distanceFromCenter = length(centered); 
 	float vignette = smoothstep(0.7, 0.5, distanceFromCenter);
