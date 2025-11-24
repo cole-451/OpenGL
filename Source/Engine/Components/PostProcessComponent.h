@@ -26,5 +26,6 @@ namespace neu {
 		Parameters parameters = Parameters::None;
 		glm::vec3 colorTint{ 1,1,1 };
 		float blend{ 1.0f };
+		glm::vec2 resolution;
 	};
 }

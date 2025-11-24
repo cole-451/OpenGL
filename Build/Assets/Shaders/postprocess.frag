@@ -19,6 +19,7 @@ uniform vec3 u_colorTint = vec3(1, 1, 1);
 uniform float u_blend = 0;  // blend between original and postprocess color
 
 uniform sampler2D u_baseMap;
+uniform vec2 u_resolution;
 
 // There is no random function in GLSL, uses math function to generate psuedo random number
 // https://thebookofshaders.com/10/
@@ -42,6 +43,20 @@ void main()
 	if ((u_parameters & GRAIN) != 0u)		postprocess = postprocess * random(gl_FragCoord.xy + u_time);
 	if ((u_parameters & INVERT) != 0u)		postprocess = vec4(-color.r, -color.g, -color.b, 1);
 	//<invert color>
+
+	if ((u_parameters & VIGNETTE) != 0u){
+	//calculate distance, and darken pixels the further they are away from the screen
+	vec2 centered = v_texcoord -0.5;
+	centered.x *= u_resolution.x / u_resolution.y; // this adjusts this to the aspect ratio
+	float distanceFromCenter = length(centered); 
+	float vignette = smoothstep(0.7, 0.5, distanceFromCenter);
+	postprocess.rgb *= 1.0 - vignette * u_intensity;
+// obtained via copilot. if something IS wrong here, then I will go over it once more.
+
+
+	}
+	
+	
 	
 	f_color = mix(color, postprocess, u_blend); // mix colors using u_blend (0-1)
 
