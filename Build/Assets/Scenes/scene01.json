@@ -1,4 +1,6 @@
 {
+  "ambient_light": [ 0.2, 0.2, 0.2 ],
+  "post_process": true,
   "actors": [
     {
       "name": "skybox",
@@ -77,7 +79,8 @@
       },
       "components": [
         {
-          "type": "CameraComponent"
+          "type": "CameraComponent",
+          "outputTexture": "postprocessTexture"
         },
         {
           "type": "FirstPersonController",

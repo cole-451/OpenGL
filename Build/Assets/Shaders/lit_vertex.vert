@@ -64,14 +64,14 @@ vec3 calculateLight(in Light light, in vec3 position, in vec3 normal){
 		attenuation = calculateAttenuation(light_distance, light.range);
 	break;
 	case DIRECTIONAL:
-	light_dir = light.direction;
+	light_dir = -light.direction;
 	attenuation = 1.0;
 	break;
 
 	case SPOT:
 		light_dir = normalize(light.position - position);
 		light_distance = length(light.position - position);
-		float angle = dot(light_dir, normalize(light.direction));
+		float angle = dot(light_dir, normalize(-light.direction));
 		attenuation = calculateAttenuation(light_distance, light.range);
 	float spotAttenuation = smoothstep(light.outerCutoff + 0.001, light.innerCutoff, angle);
 	break;

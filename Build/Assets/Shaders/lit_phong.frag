@@ -67,7 +67,7 @@ vec3 calculateLight(in Light light, vec3 position, vec3 normal, in float specula
 	break;
 
 	case DIRECTIONAL:
-		light_dir = light.direction;
+		light_dir = -light.direction;
 		attenuation = 1.0;
 	break;
 
@@ -75,7 +75,7 @@ vec3 calculateLight(in Light light, vec3 position, vec3 normal, in float specula
 		light_dir = normalize(light.position - position);
 		light_distance = length(light.position - position);
 		attenuation = calculateAttenuation(light_distance, light.range);
-		float angle = dot(light_dir, normalize(light.direction));
+		float angle = dot(light_dir, normalize(-light.direction));
 		float spotAttenuation = smoothstep(light.outerCutoff + 0.001, light.innerCutoff, angle);
 	break;
 	}
