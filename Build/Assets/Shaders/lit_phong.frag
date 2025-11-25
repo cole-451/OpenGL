@@ -72,11 +72,17 @@ vec3 calculateLight(in Light light, vec3 position, vec3 normal, in float specula
 	break;
 
 	case SPOT:
-		light_dir = normalize(light.position - position);
+		light_dir = normalize(light.position - position); // the distance between your light and the object
 		light_distance = length(light.position - position);
 		attenuation = calculateAttenuation(light_distance, light.range);
 		float angle = dot(light_dir, normalize(-light.direction));
+		if (angle > light.outerCutoff){
+		attenuation = 0;
+		}
+		else{
 		float spotAttenuation = smoothstep(light.outerCutoff + 0.001, light.innerCutoff, angle);
+		attenuation *= spotAttenuation;
+		}
 	break;
 	}
 

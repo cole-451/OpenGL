@@ -81,11 +81,17 @@ vec3 calculateLight(in Light light, vec3 position, vec3 normal, in float specula
 	break;
 
 	case SPOT:
-		light_dir = normalize(light.position - position);
+		light_dir = normalize(light.position - position); // the distance between your light and the object
 		light_distance = length(light.position - position);
 		attenuation = calculateAttenuation(light_distance, light.range);
 		float angle = dot(light_dir, normalize(-light.direction));
+		if (angle > light.outerCutoff){
+		attenuation = 0;
+		}
+		else{
 		float spotAttenuation = smoothstep(light.outerCutoff + 0.001, light.innerCutoff, angle);
+		attenuation *= spotAttenuation;
+		}
 	break;
 	}
 
@@ -136,7 +142,7 @@ void main(){
 	// multi-lights
 	for(int i = 0; i <u_num_lights;i++){
 	float shadow = (u_lights[i].shadowCaster && ((u_material.parameters & SHADOW_MAP) != 0u))
-   ? calculateShadow(fs_in.shadowcoord, 0.001)
+   ? calculateShadow(fs_in.shadowcoord, 0)
    : 1.0;
 		color += calculateLight(u_lights[i], fs_in.position, normal, specularMask);
 	}
