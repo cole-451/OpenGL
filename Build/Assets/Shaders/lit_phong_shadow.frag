@@ -135,9 +135,9 @@ void main(){
 
 	// multi-lights
 	for(int i = 0; i <u_num_lights;i++){
-	float shadow = (u_lights[i].shadowCaster && (u_material.parameters & SHADOW_MAP) != 0u)
-	? calculateShadow(fs_in.shadowcoord, 0)
-	:1.0;
+	float shadow = (u_lights[i].shadowCaster && ((u_material.parameters & SHADOW_MAP) != 0u))
+   ? calculateShadow(fs_in.shadowcoord, 0.001)
+   : 1.0;
 		color += calculateLight(u_lights[i], fs_in.position, normal, specularMask);
 	}
 

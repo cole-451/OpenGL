@@ -228,7 +228,7 @@
     <None Include="..\..\Build\Assets\Shaders\depth.frag" />
     <None Include="..\..\Build\Assets\Shaders\depth.prog" />
     <None Include="..\..\Build\Assets\Shaders\depth.vert" />
-    <None Include="..\..\Build\Assets\Shaders\lit_phong _shadow.frag" />
+    <None Include="..\..\Build\Assets\Shaders\lit_phong_shadow.frag" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong_shadow.prog" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong_shadow.vert" />
     <None Include="..\..\Build\Assets\Shaders\lit_vertex.frag" />
