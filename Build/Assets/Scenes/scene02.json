@@ -16,8 +16,15 @@
           "lightType": "directional",
           "color": [ 1, 1, 1 ],
           "intensity": 1.0,
-          "range": 45.0
+          "range": 45.0,
+          "shadowCaster": true
 
+        },
+        {
+          "type": "CameraComponent",
+          "projectionType": "orthographic",
+          "shadowCamera": true,
+          "outputTexture":  "shadowTexture"
         }
       ]
     },

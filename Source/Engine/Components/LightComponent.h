@@ -26,5 +26,6 @@ namespace neu {
 		LightType lightType = LightType::Point;
 		float outerCutoff = 30.0f;
 		float innerCutoff = 30.0f;
+		bool shadowCaster = false;
 	};
 }

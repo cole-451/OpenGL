@@ -19,6 +19,7 @@ namespace neu {
 		program.SetUniform(name + ".outerCutoff", glm::radians(outerCutoff));
 		program.SetUniform(name + ".innerCutoff", glm::radians(innerCutoff));
 		program.SetUniform(name + ".direction", direction);
+		program.SetUniform(name + ".shadowCaster", shadowCaster);
 		
 
 	}
@@ -34,6 +35,8 @@ namespace neu {
 		SERIAL_READ(value, range);
 		SERIAL_READ(value, outerCutoff);
 		SERIAL_READ(value, innerCutoff);
+
+		SERIAL_READ(value, shadowCaster);
 
 	}
 	void LightComponent::UpdateGui()
@@ -51,6 +54,8 @@ namespace neu {
 		
 		ImGui::DragFloat("OuterCutoff", &outerCutoff, 0.1f, 0.0f);
 		ImGui::DragFloat("InnerCutoff", &innerCutoff, 0.1f, 0.0f);
+
+		ImGui::Checkbox("Shadow Caster?", &shadowCaster);
 
 		//set inner and outer cutoff???
 	}

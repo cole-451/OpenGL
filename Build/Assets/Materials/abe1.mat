@@ -1,9 +1,10 @@
 {
-	"program": "Shaders/lit_phong.prog",
+	"program": "Shaders/lit_phong_shadow.prog",
 	"baseMap": "Textures/Abev1/abe_clothes_BaseColor.png",
 	"baseColor": [ 1, 1, 1 ],
-	"normalMap":  "Textures/Abev1/abe_clothes_normal.png",
+	"normalMap": "Textures/Abev1/abe_clothes_normal.png",
+	"shadowMap": "shadowTexture",
 	"shininess": 128,
-	"tiling": [1,1],
-	"offset": [0,0]
+	"tiling": [ 1, 1 ],
+	"offset": [ 0, 0 ]
 }

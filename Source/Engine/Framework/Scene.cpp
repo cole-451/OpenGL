@@ -102,6 +102,9 @@ namespace neu {
 		}
 		std::vector<Program*> programs(programSet.begin(), programSet.end());
 
+
+
+
 		for (auto camera : cameras) {
 			PostProcessComponent* postprocessComponent = camera->owner->GetComponent<PostProcessComponent>();
 			bool renderToTexture = camera->outputTexture && (!postprocessComponent || (postprocessComponent && m_postprocess));
@@ -112,6 +115,8 @@ namespace neu {
 				glViewport(0, 0, camera->outputTexture->m_size.x, camera->outputTexture->m_size.y);
 			}
 			camera->Clear();
+
+
 
 
 		DrawPass(renderer, programs, lights, camera);
