@@ -49,7 +49,7 @@ void main()
 	vec2 centered = v_texcoord -0.5; //get the center of the screen
 	centered.x *= u_resolution.x / u_resolution.y; // this adjusts this to the aspect ratio
 	float distanceFromCenter = length(centered); 
-	float vignette = smoothstep(0.7, 0.5, distanceFromCenter);
+	float vignette = smoothstep(0.8, 0.2, 1-distanceFromCenter); // inverted the distance so that the darkness is AROUND the screen.
 	postprocess.rgb *= 1.0 - vignette * u_intensity;
 // obtained via copilot. if something IS wrong here, then I will go over it once more.
 
