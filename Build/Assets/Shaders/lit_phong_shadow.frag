@@ -60,7 +60,7 @@ float calculateAttenuation( in float light_distance, in float range){
 }
 
 float calculateShadow(in vec4 shadowcoord, in float bias){
-return texture(u_shadowMap, shadowcoord.xy).z < shadowcoord.z ? 0.0 : 1.0;
+return texture(u_shadowMap, shadowcoord.xy).z < shadowcoord.z - bias ? 0.0 : 1.0;
 }
 
 vec3 calculateLight(in Light light, vec3 position, vec3 normal, in float specularMask) {
@@ -141,11 +141,11 @@ void main(){
 
 	// multi-lights
 	for(int i = 0; i <u_num_lights;i++){
-	float shadow = (u_lights[i].shadowCaster && ((u_material.parameters & SHADOW_MAP) != 0u))
-   ? calculateShadow(fs_in.shadowcoord, 0)
+  float shadow = (u_lights[i].shadowCaster && ((u_material.parameters & SHADOW_MAP) != 0u))
+   ? calculateShadow(fs_in.shadowcoord, 0.001)
    : 1.0;
-		color += calculateLight(u_lights[i], fs_in.position, normal, specularMask);
-	}
+    color += calculateLight(u_lights[i], fs_in.position, normal, specularMask) * shadow;
+  }
 
 	// emissive
 	vec4 emissive = ((u_material.parameters & EMISSIVE_MAP) != 0u)

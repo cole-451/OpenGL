@@ -26,37 +26,36 @@ namespace neu {
 	void LightComponent::Read(const serial_data_t& value)
 	{
 		std::string type;
-		SERIAL_READ(value, type);
+		SERIAL_READ_NAME(value, "lightType", type);
 		if (equalsIgnoreCase(type, "point")) lightType = LightType::Point;
 		if (equalsIgnoreCase(type, "directional")) lightType = LightType::Directional;
 		if (equalsIgnoreCase(type, "spot")) lightType = LightType::Spot;
+
 		SERIAL_READ(value, color);
 		SERIAL_READ(value, intensity);
 		SERIAL_READ(value, range);
 		SERIAL_READ(value, outerCutoff);
 		SERIAL_READ(value, innerCutoff);
-
 		SERIAL_READ(value, shadowCaster);
-
 	}
-	void LightComponent::UpdateGui()
-	{
-		const char* types[] = { "Point", "Directional", "Spot" };
 
+	void LightComponent::UpdateGui() {
+		const char* types[] = { "Point", "Directional", "Spot" };
 		ImGui::Combo("Type", (int*)&lightType, types, 3);
 
-		ImGui::ColorEdit3("color", glm::value_ptr(color));
-		ImGui::DragFloat("intensity", &intensity, 0.1f, 0.0f);
-		
-		if (lightType != LightType::Spot) {
-			ImGui::DragFloat("range", &range, 0.1f, 0.0f);
+		ImGui::ColorEdit3("Color", glm::value_ptr(color));
+		ImGui::DragFloat("Intensity", &intensity, 0.1f, 0.0f);
+
+		if (lightType != LightType::Directional) {
+			ImGui::DragFloat("Range", &range, 0.1f, 0.0f);
 		}
-		
-		ImGui::DragFloat("OuterCutoff", &outerCutoff, 0.1f, 0.0f);
-		ImGui::DragFloat("InnerCutoff", &innerCutoff, 0.1f, 0.0f);
+		if (lightType == LightType::Spot) {
+			ImGui::DragFloat("Inner Cutoff", &innerCutoff, 0.1f, 0.0f, outerCutoff);
+			ImGui::DragFloat("OuterSpotAngle", &outerCutoff, 0.1f, innerCutoff);
 
-		ImGui::Checkbox("Shadow Caster?", &shadowCaster);
+			outerCutoff = math::max(innerCutoff, outerCutoff);
+		}
 
-		//set inner and outer cutoff???
+		ImGui::Checkbox("Shadow Caster", &shadowCaster);
 	}
 }
